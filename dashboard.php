@@ -1,9 +1,16 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    
+    <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login_form.html');
-    exit;
-}
+
 
 echo "Selamat datang, " . $_SESSION['username'] . "!<br>";
 echo "Peran Anda: " . $_SESSION['role'] . "<br><br>";
@@ -18,3 +25,8 @@ if ($_SESSION['role'] == 'kasir' || $_SESSION['role'] == 'admin' || $_SESSION['r
 }
 echo "<a href='logout.php'>Logout</a>";
 ?>
+
+
+</body>
+</html>
+
