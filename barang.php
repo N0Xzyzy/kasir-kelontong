@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'Config/koneksi.php';
 
 
 $query = mysqli_query($conn, "SELECT * FROM barang ORDER BY id_barang DESC");

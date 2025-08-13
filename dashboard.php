@@ -1,6 +1,11 @@
 <?php
 // Mulai session sebelum HTML
 session_start();
+include 'Config/koneksi.php';
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'owner') {
+    die("Akses ditolak. Anda bukan user.");
+}
+
 
 // Include sidebar
 include 'Layout/sidebar.php';

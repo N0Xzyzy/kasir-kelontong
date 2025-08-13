@@ -13,7 +13,7 @@
         </div>
 
         <nav class="space-y-1.5 text-sm font-semibold">
-          <a href="../dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="./dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>🏠</span><span>Dashboard</span>
           </a>
           <a href="./transaksi.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
@@ -22,8 +22,8 @@
           <a href="./barang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📁</span><span>Barang</span>
           </a>
-          <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
-            <span>🗓️</span><span>Calendar</span>
+          <a href="./kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+            <span>🗓️</span><span>Kelola User</span>
           </a>
           <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📄</span><span>Documents</span>
