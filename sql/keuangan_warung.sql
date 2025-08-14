@@ -289,6 +289,20 @@ ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 COMMIT;
 
+ALTER TABLE laporan_keuangan
+ADD KEY id_pemasukan (id_pemasukan),
+ADD KEY id_pengeluaran (id_pengeluaran);
+
+ALTER TABLE laporan_keuangan
+ADD CONSTRAINT laporan_keuangan_ibfk_1
+FOREIGN KEY (id_pemasukan) REFERENCES pemasukan(id)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE laporan_keuangan
+ADD CONSTRAINT laporan_keuangan_ibfk_2
+FOREIGN KEY (id_pengeluaran) REFERENCES pengeluaran(id)
+ON DELETE SET NULL ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

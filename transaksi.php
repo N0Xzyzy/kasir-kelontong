@@ -128,7 +128,13 @@ include 'Layout/sidebar.php';
     function renderCart() {
     let cartContainer = document.getElementById('cartItems');
     cartContainer.innerHTML = '';
+
+    let totalHarga = 0;
+
     cart.forEach(item => {
+        let subtotal = item.harga * item.jumlah;
+        totalHarga += subtotal;
+
         cartContainer.innerHTML += `
             <div class="border p-2 rounded flex justify-between items-center">
                 <div>
@@ -136,17 +142,14 @@ include 'Layout/sidebar.php';
                     <p>Rp ${item.harga.toLocaleString()} x ${item.jumlah}</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <!-- Tombol kurang -->
                     <button type="button" onclick="decreaseQty(${item.id})"
                         class="bg-gray-300 px-2 py-1 rounded hover:bg-gray-400">-</button>
                     
                     <span>${item.jumlah}</span>
                     
-                    <!-- Tombol tambah -->
                     <button type="button" onclick="increaseQty(${item.id})"
                         class="bg-gray-300 px-2 py-1 rounded hover:bg-gray-400">+</button>
 
-                    <!-- Tombol hapus -->
                     <button type="button" onclick="removeFromCart(${item.id})"
                         class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">Hapus</button>
 
@@ -156,7 +159,15 @@ include 'Layout/sidebar.php';
             </div>
         `;
     });
+
+    // Tambahkan total harga di bawah daftar item
+    cartContainer.innerHTML += `
+        <div class="mt-4 p-2 border-t font-bold text-lg">
+            Total: Rp ${totalHarga.toLocaleString()}
+        </div>
+    `;
 }
+
 
 function decreaseQty(id) {
     let item = cart.find(i => i.id === id);
