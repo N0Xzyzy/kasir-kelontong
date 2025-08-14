@@ -2,7 +2,7 @@
 session_start();
 include 'Config/koneksi.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'owner') {
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
 

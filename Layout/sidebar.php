@@ -2,7 +2,7 @@
 <div class="flex h-full w-45 ">
     
 
-    <aside class="w-45 bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
+    <aside class="w-45 bg-white  p-4 flex flex-col justify-between">
       <div>
 
         <div class="mb-7 flex items-center space-x-2">

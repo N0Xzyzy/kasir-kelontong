@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'koneksi.php';
+require 'Config/koneksi.php';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         if (md5($password) === $user['password']) {
-            $_SESSION['user_id'] = $user['id_user'];
+            $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
