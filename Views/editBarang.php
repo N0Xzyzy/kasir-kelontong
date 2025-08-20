@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require '../Config/koneksi.php';
 
 $id = $_GET['id'];
 $result = mysqli_query($conn, "SELECT * FROM barang WHERE id_barang = $id");

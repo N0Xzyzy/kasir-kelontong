@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'Config/koneksi.php';
+include '../Config/koneksi.php';
 
 // Cek apakah user login dan role = owner
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 'owner') {

@@ -1,14 +1,14 @@
 <?php
 // Mulai session sebelum HTML
 session_start();
-include 'Config/koneksi.php';
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'owner') {
+include '../Config/koneksi.php';
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan user.");
 }
 
 
 // Include sidebar
-include 'Layout/sidebar.php';
+include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +30,7 @@ include 'Layout/sidebar.php';
 
 
 <section class="flex-1 flex flex-col">
-    <?php include 'Layout/header.php';?>
+    <?php include '../Layout/header.php';?>
 
     <main class="p-6 flex-1">
         <h1 class="text-lg font-bold">Selamat datang!</h1>

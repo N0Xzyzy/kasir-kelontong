@@ -17,11 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         if (md5($password) === $user['password']) {
-            $_SESSION['user_id'] = $user['id_user'];
+            $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
-            header("Location: dashboard.php");
+            header("Location: ../Views/dashboard.php");
             exit;
         } else {
             header("Location: index.php?error=" . urlencode("Password salah"));

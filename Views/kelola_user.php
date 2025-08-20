@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'Config/koneksi.php';
+include '../Config/koneksi.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'owner') {
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
 
@@ -16,7 +16,7 @@ $query .= " ORDER BY username ASC";
 
 $result = $conn->query($query);
 
-include 'Layout/sidebar.php';
+include '../Layout/sidebar.php';
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ include 'Layout/sidebar.php';
 <body class="bg-gray-100 h-screen flex">
     <section class="flex-1 flex flex-col">
         <?php
-        include 'Layout/header.php';
+        include '../Layout/header.php';
         if (isset($_SESSION['msg'])) {
             echo "<p style='color: green;'>" . $_SESSION['msg'] . "</p>";
             unset($_SESSION['msg']);

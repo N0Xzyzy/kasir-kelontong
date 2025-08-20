@@ -1,9 +1,9 @@
 <?php
 session_start();
-include 'Config/koneksi.php';
+include '../Config/koneksi.php';
 
 // Cek hak akses
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'owner') {
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
 
@@ -47,18 +47,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check_stmt->close();
     }
 }
+include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Tambah User</title>
-    <link rel="stylesheet" href="pageNTable.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <div class="main-content">
+<body class="h-full flex bg-gray-100">
+
+<div class="flex flex-col flex-1">
+    <?php include '../Layout/header.php';?>
+    <main class="p-6 flex-1">
     <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
     <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>".htmlspecialchars($_GET['msg'])."</p>"; ?>
 
@@ -84,5 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">+ Tambah User</button>
         </form>
     </div>
+</main>
+    
 </body>
 </html>

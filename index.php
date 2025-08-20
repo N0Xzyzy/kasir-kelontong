@@ -26,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="flex justify-center items-center h-screen">
         <div class="w-96 p-6 shadow-lg rounded-mg">
             <h2 class="text-2xl font-bold mb-2">Login</h2>
-        <form method="POST" action="login.php">
+        <form method="POST" action="Config/login.php">
             <input class="border w-full px-2 py-4 border border-gray-300 rounded-md focus:outline-focus focus:ring-2 focus:ring-blue-300" type="text" name="username" placeholder="Username" required><br>
             <input class="border w-full px-2 py-4 border border-gray-300 rounded-md focus:outline-focus focus:ring-2 focus:ring-blue-300" type="password" name="password" placeholder="Password" required><br>
             <button class="text-md w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer" type="submit">Login</button>

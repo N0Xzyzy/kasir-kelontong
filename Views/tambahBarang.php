@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require '../Config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama_barang'];
@@ -13,13 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: barang.php");
     exit;
 }
+include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Tambah Barang</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 h-screen flex">
+
+<section class="flex-1 flex flex-col">
+    <?php include '../Layout/header.php';?>
+
     <h1>Tambah Barang</h1>
     <form method="POST">
         Nama Barang: <input type="text" name="nama_barang" required><br>
@@ -28,5 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Harga Jual: <input type="number" step="0.01" name="harga_jual" required><br>
         <button type="submit">Simpan</button>
     </form>
+    </section>
 </body>
 </html>

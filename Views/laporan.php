@@ -4,7 +4,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     header('Location: login_form.html');
     exit;
 }
-require 'koneksi.php';
+require '../Configkoneksi.php';
 
 $transaksi = $conn->query("SELECT * FROM transaksi");
 $pengeluaran = $conn->query("SELECT * FROM pengeluaran");

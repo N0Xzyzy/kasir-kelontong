@@ -1,8 +1,8 @@
 
-<div class="flex h-full w-45 ">
+<div class="border border-r border-gray-100 flex h-full w-45 ">
     
 
-    <aside class="w-45 bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
+    <aside class="w-45 bg-white  p-4 flex flex-col justify-between">
       <div>
 
         <div class="mb-7 flex items-center space-x-2">
@@ -13,16 +13,19 @@
         </div>
 
         <nav class="space-y-1.5 text-sm font-semibold">
-          <a href="./dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="../Views/dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>🏠</span><span>Dashboard</span>
           </a>
-          <a href="./transaksi.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="../Views/transaksi.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>👥</span><span>Transaksi</span>
           </a>
-          <a href="./barang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="../Views/hutang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+            <span>👥</span><span>Hutang</span>
+          </a>
+          <a href="../Views/barang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📁</span><span>Barang</span>
           </a>
-          <a href="./kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="../Views/kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>🗓️</span><span>Kelola User</span>
           </a>
           <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">

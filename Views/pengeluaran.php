@@ -4,7 +4,7 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'kasi
     header('Location: login_form.html');
     exit;
 }
-require 'koneksi.php';
+require '../Config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tanggal = $_POST['tanggal'];
