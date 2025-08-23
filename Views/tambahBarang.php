@@ -1,5 +1,6 @@
 <?php
 require '../Config/koneksi.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama_barang'];
@@ -34,7 +35,7 @@ include '../Layout/sidebar.php';
 <section class="flex-1 flex flex-col">
     <?php include '../Layout/header.php';?>
 
-    <h1>Tambah Barang</h1>
+    <h1 class="font-bold text-xl">Tambah Barang</h1>
     <form method="POST">
         Nama Barang: <input type="text" name="nama_barang" required><br>
         Stok: <input type="number" name="stok" required><br>

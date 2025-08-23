@@ -40,11 +40,11 @@ include '../Layout/sidebar.php';
                     <tr>
                         <td><?= $row['id'] ?></td>
                         <td><?= htmlspecialchars($row['nama_pelanggan']) ?></td>
-                        <td><?= number_format($row['id_transaksi'], 2, ',', '.') ?></td>
+                        <td><?= $row['id_transaksi']?></td>
                         <td><?= number_format($row['jumlah_hutang'], 2, ',', '.') ?></td>
                         <td><?= date('d-m-Y', strtotime($row['tanggal_jatuh_tempo'])) ?></td>
                         <td><?= ucfirst($row['status']) ?></td>
-                        <td><?= number_format($row['kontak'], 2, ',', '.') ?></td>
+                        <td><?= $row['kontak'] ?></td>
                         <td><?= htmlspecialchars($row['catatan']) ?></td>
                         <td>
                             <a href="editHutang.php?id=<?= $row['id'] ?>">Edit</a>

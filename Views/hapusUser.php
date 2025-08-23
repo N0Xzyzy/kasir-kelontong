@@ -44,3 +44,4 @@ if (isset($_GET['id_user'])) {
     header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 }
+?>

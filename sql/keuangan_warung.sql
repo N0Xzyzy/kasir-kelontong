@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 14, 2025 at 04:17 AM
+-- Generation Time: Aug 22, 2025 at 11:22 AM
 -- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- PHP Version: 8.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,33 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `harga_beli`, `harga_jual`) VALUES
-(1, 'sego sambel iwak', 10, '2000.00', '10000.00');
+(2, 'Gula 1kg', 959, 2000.00, 10000.00),
+(3, 'sego goreng', 12122, 1000.00, 3000.00),
+(4, 'mi goreang', 122, 1.00, 4000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_transaksi`
+--
+
+CREATE TABLE `detail_transaksi` (
+  `id_detail` int NOT NULL,
+  `id_transaksi` int NOT NULL,
+  `id_barang` int NOT NULL,
+  `jumlah` int NOT NULL,
+  `harga_jual` decimal(12,2) NOT NULL,
+  `subtotal` decimal(12,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `jumlah`, `harga_jual`, `subtotal`) VALUES
+(1, 10, 2, 1, 10000.00, 10000.00),
+(2, 10, 3, 1, 3000.00, 3000.00),
+(3, 10, 4, 1, 4000.00, 4000.00);
 
 -- --------------------------------------------------------
 
@@ -59,6 +85,13 @@ CREATE TABLE `hutang_pelanggan` (
   `catatan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `hutang_pelanggan`
+--
+
+INSERT INTO `hutang_pelanggan` (`id`, `nama_pelanggan`, `id_transaksi`, `jumlah_hutang`, `tanggal_jatuh_tempo`, `status`, `kontak`, `catatan`) VALUES
+(1, 'Sujarwo Tejo', 10, 17000.00, '2025-08-27', 'belum', '0891231823', 'pak jarwo utangnya belom lunas lho rek');
+
 -- --------------------------------------------------------
 
 --
@@ -71,9 +104,7 @@ CREATE TABLE `laporan_keuangan` (
   `total_pemasukan` decimal(12,2) NOT NULL DEFAULT '0.00',
   `total_pengeluaran` decimal(12,2) NOT NULL DEFAULT '0.00',
   `laba` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `jumlah_transaksi` int NOT NULL DEFAULT '0',
-  `id_pemasukan` int DEFAULT NULL,
-  `id_pengeluaran` int DEFAULT NULL
+  `jumlah_transaksi` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -88,8 +119,7 @@ CREATE TABLE `pemasukan` (
   `jumlah` decimal(12,2) NOT NULL,
   `sumber` enum('transaksi','pelunasan_hutang','lainnya') NOT NULL,
   `id_sumber` int DEFAULT NULL,
-  `keterangan` text,
-  `id_user` int NOT NULL
+  `keterangan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -115,10 +145,6 @@ CREATE TABLE `pengeluaran` (
 CREATE TABLE `transaksi` (
   `id_transaksi` int NOT NULL,
   `tanggal` date NOT NULL,
-  `id_barang` int NOT NULL,
-  `jumlah` int NOT NULL,
-  `harga_jual` decimal(12,2) NOT NULL,
-  `subtotal` decimal(12,2) NOT NULL,
   `total_transaksi` decimal(12,2) NOT NULL,
   `metode_pembayaran` enum('Tunai','Hutang') NOT NULL,
   `id_user` int DEFAULT NULL
@@ -128,8 +154,8 @@ CREATE TABLE `transaksi` (
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `id_barang`, `jumlah`, `harga_jual`, `subtotal`, `total_transaksi`, `metode_pembayaran`, `id_user`) VALUES
-(4, '2025-08-14', 1, 2, '10000.00', '20000.00', '20000.00', 'Tunai', 3);
+INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total_transaksi`, `metode_pembayaran`, `id_user`) VALUES
+(10, '2025-08-20', 17000.00, 'Hutang', 2);
 
 -- --------------------------------------------------------
 
@@ -149,8 +175,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
-(2, 'Owner', '5be057accb25758101fa5eadbbd79503', 'owner'),
-(3, 'Owner2', '202cb962ac59075b964b07152d234b70', 'owner');
+(2, 'Owner', '5be057accb25758101fa5eadbbd79503', 'owner');
 
 --
 -- Indexes for dumped tables
@@ -161,6 +186,14 @@ INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
+
+--
+-- Indexes for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD PRIMARY KEY (`id_detail`),
+  ADD KEY `id_transaksi` (`id_transaksi`),
+  ADD KEY `id_barang` (`id_barang`);
 
 --
 -- Indexes for table `hutang_pelanggan`
@@ -174,16 +207,13 @@ ALTER TABLE `hutang_pelanggan`
 --
 ALTER TABLE `laporan_keuangan`
   ADD PRIMARY KEY (`id_laporan`),
-  ADD UNIQUE KEY `tanggal` (`tanggal`),
-  ADD KEY `id_pemasukan` (`id_pemasukan`),
-  ADD KEY `id_pengeluaran` (`id_pengeluaran`);
+  ADD UNIQUE KEY `tanggal` (`tanggal`);
 
 --
 -- Indexes for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pengeluaran`
@@ -197,7 +227,6 @@ ALTER TABLE `pengeluaran`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
-  ADD KEY `id_barang` (`id_barang`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -215,13 +244,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id_barang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_barang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `hutang_pelanggan`
 --
 ALTER TABLE `hutang_pelanggan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `laporan_keuangan`
@@ -245,35 +280,30 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE,
+  ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
+
+--
 -- Constraints for table `hutang_pelanggan`
 --
 ALTER TABLE `hutang_pelanggan`
   ADD CONSTRAINT `hutang_pelanggan_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`);
-
---
--- Constraints for table `laporan_keuangan`
---
-ALTER TABLE `laporan_keuangan`
-  ADD CONSTRAINT `laporan_keuangan_ibfk_1` FOREIGN KEY (`id_pemasukan`) REFERENCES `pemasukan` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `pemasukan`
---
-ALTER TABLE `pemasukan`
-  ADD CONSTRAINT `pemasukan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pengeluaran`
@@ -285,23 +315,8 @@ ALTER TABLE `pengeluaran`
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`),
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 COMMIT;
-
-ALTER TABLE laporan_keuangan
-ADD KEY id_pemasukan (id_pemasukan),
-ADD KEY id_pengeluaran (id_pengeluaran);
-
-ALTER TABLE laporan_keuangan
-ADD CONSTRAINT laporan_keuangan_ibfk_1
-FOREIGN KEY (id_pemasukan) REFERENCES pemasukan(id)
-ON DELETE SET NULL ON UPDATE CASCADE;
-
-ALTER TABLE laporan_keuangan
-ADD CONSTRAINT laporan_keuangan_ibfk_2
-FOREIGN KEY (id_pengeluaran) REFERENCES pengeluaran(id)
-ON DELETE SET NULL ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
