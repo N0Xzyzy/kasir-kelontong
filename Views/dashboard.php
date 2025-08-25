@@ -32,7 +32,7 @@ include '../Layout/sidebar.php';
 <section class="flex-1 flex flex-col">
     <?php include '../Layout/header.php';?>
 
-    <main class="p-6 flex-1">
+    <main class="p-6 pt-17 flex-1">
         <h1 class="text-lg font-bold">Selamat datang!</h1>
         <p class="text-gray-600">Ini adalah halaman dashboard kamu.</p>
     </main>

@@ -6,7 +6,7 @@ include "../Config/koneksi.php";
 
 // Ambil data barang
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-$sql_barang = "SELECT * FROM barang WHERE nama_barang LIKE '%$search%'";
+$sql_barang = "SELECT * FROM barang WHERE status = 'aktif' AND  nama_barang LIKE '%$search%'";
 $result_barang = $conn->query($sql_barang);
 
 // Proses transaksi
@@ -70,7 +70,7 @@ include '../Layout/sidebar.php';
     <section class="flex-1 flex flex-col">
         <?php include '../Layout/header.php'; ?>
 
-        <div class="flex">
+        <div class="flex p-6 pt-17">
             <!-- Konfirmasi Transaksi -->
             <div class="w-1/3 p-4 bg-white border border-gray-300 rounded shadow h-screen flex flex-col">
                 <h2 class="text-xl font-bold mb-4">Konfirmasi Transaksi</h2>

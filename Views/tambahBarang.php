@@ -32,7 +32,7 @@ include '../Layout/sidebar.php';
 </head>
 <body class="bg-gray-100 h-screen flex">
 
-<section class="flex-1 flex flex-col">
+<section class="flex-1 pt-17 flex flex-col">
     <?php include '../Layout/header.php';?>
 
     <h1 class="font-bold text-xl">Tambah Barang</h1>

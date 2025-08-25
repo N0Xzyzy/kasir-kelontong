@@ -1,8 +1,8 @@
 
-<div class="border border-r border-gray-100 flex h-full w-45 ">
+<div class="border border-r border-gray-100 flex h-full w-45">
     
 
-    <aside class="w-45 bg-white  p-4 flex flex-col justify-between">
+    <aside class="w-45 bg-white border border-r w-45 border-gray-100 p-4 flex flex-col justify-between h-full fixed">
       <div>
 
         <div class="mb-7 flex items-center space-x-2">

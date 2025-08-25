@@ -2,14 +2,13 @@
 session_start();
 include '../Config/koneksi.php';
 
-// Cek apakah user login dan role = owner
-if (!isset($_SESSION['username']) || $_SESSION['role'] != 'owner') {
-    die("Akses ditolak. Anda bukan owner.");
+$id_pengeluaran = isset($_GET['id_pengeluaran']) ? (int) $_GET['id_pengeluaran'] : 0;
+if ($id_pengeluaran > 0){
+    mysqli_query($conn, "DELETE FROM pengeluaran WHERE id_pengeluaran = $id_pengeluaran");
+    $_SESSION['msg'] = 'Pengeluaran berhasil dihapus';
+}else {
+    $_SESSION['msg'] = 'Pengeluaran gagal dihapus';
 }
+header("Location: pengeluaran.php")
 
-$id = $_GET['id_pengeluaran'];
-mysqli_query($conn, "DELETE FROM pengeluaran WHERE id_pengeluaran = $id");
-
-header("Location: barang.php");
-exit;
 ?>

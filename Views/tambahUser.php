@@ -2,7 +2,6 @@
 session_start();
 include '../Config/koneksi.php';
 
-// Cek hak akses
 if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
@@ -12,13 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password_plain = trim($_POST['password']);
     $role = $_POST['role'];
 
-    // Validasi input kosong
     if (empty($username) || empty($password_plain) || empty($role)) {
         $error = "Semua kolom harus diisi!";
     } elseif (!in_array($role, ['owner', 'operator', 'kasir'])) {
         $error = "Role tidak valid!";
     } else {
-        // Cek username sudah ada atau belum
         $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ?");
         $check_stmt->bind_param("s", $username);
         $check_stmt->execute();
@@ -27,10 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check_stmt->num_rows > 0) {
             $error = "Username sudah digunakan!";
         } else {
-            // Hash password pakai MD5
             $password = md5($password_plain);
 
-            // Insert user baru
             $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
             if ($stmt) {
                 $stmt->bind_param("sss", $username, $password, $role);
@@ -67,7 +62,7 @@ include '../Layout/sidebar.php';
 
 <div class="flex flex-col flex-1">
     <?php include '../Layout/header.php';?>
-    <main class="p-6 flex-1">
+    <main class="p-6 pt-17 flex-1">
     <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
     <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>".htmlspecialchars($_GET['msg'])."</p>"; ?>
 

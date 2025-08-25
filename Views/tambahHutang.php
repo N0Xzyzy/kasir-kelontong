@@ -68,7 +68,7 @@ include '../Layout/sidebar.php';
     <div class="flex flex-col flex-1">
         <?php include '../Layout/header.php';?>
 
-        <main class="p-6 flex-1">
+        <main class="p-6 pt-17 flex-1">
             <!-- Form Tambah Hutang -->
     <form method="POST">
         <div class="mb-3">

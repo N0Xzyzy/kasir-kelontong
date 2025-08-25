@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="h-full flex bg-gray-100">
     <div class="flex flex-col flex-1">
         <?php include '../Layout/header.php';?>
-        <main class="flex-1 p-6">
+        <main class="flex-1 pt-17 p-6">
             <h1 class="font-bold text-xl mb-4">Tambah Pengeluaran</h1>
             <form method="POST">
                 <label for="tanggal">Tanggal:</label>

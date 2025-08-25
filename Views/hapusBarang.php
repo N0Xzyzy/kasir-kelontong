@@ -1,9 +1,27 @@
 <?php
-require '../Config/koneksi.php';
+session_start();
+include '../Config/koneksi.php';
 
-$id = $_GET['id'];
-mysqli_query($conn, "DELETE FROM barang WHERE id_barang = $id");
+// Cek apakah user login dan role = owner
+if (!isset($_SESSION['username']) || $_SESSION['role'] != 'owner') {
+    die("Akses ditolak. Anda bukan owner.");
+}
 
+if (isset($_GET['id_barang'])) {
+    $id = (int) $_GET['id_barang'];
+
+    // Soft delete: ubah status menjadi nonaktif
+    $sql = "UPDATE barang SET status = 'nonaktif' WHERE id_barang = $id";
+    if (mysqli_query($conn, $sql)) {
+        $_SESSION['msg'] = "Barang berhasil dinonaktifkan!";
+    } else {
+        $_SESSION['msg'] = "Gagal menonaktifkan barang!";
+    }
+} else {
+    $_SESSION['msg'] = "Barang tidak valid!";
+}
+
+// Redirect kembali
 header("Location: barang.php");
 exit;
 ?>

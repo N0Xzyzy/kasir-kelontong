@@ -23,7 +23,7 @@ include '../Layout/sidebar.php';
 <body class="flex bg-gray-100 h-full">
     <div class="flex flex-col flex-1">
         <?php include '../Layout/header.php';?>
-        <main class="p-6 flex-1">
+        <main class="p-6 pt-17 flex-1">
             <h1 class="font-bold text-xl">Hutang Pelanggan</h1>
             <table >
                 <tr>
