@@ -18,6 +18,7 @@ include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Tambah Barang</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -30,19 +31,23 @@ include '../Layout/sidebar.php';
         }
     </style>
 </head>
+
 <body class="bg-gray-100 h-screen flex">
 
-<section class="flex-1 pt-17 flex flex-col">
-    <?php include '../Layout/header.php';?>
+    <section class="flex-1 flex flex-col">
+        <?php include '../Layout/header.php'; ?>
+        <main class="p-6 flex-1 pt-17">
+            <h1 class="font-bold text-xl">Tambah Barang</h1>
+            <form method="POST">
+                Nama Barang: <input type="text" name="nama_barang" required><br>
+                Stok: <input type="number" name="stok" required><br>
+                Harga Beli: <input type="number" step="0.01" name="harga_beli" required><br>
+                Harga Jual: <input type="number" step="0.01" name="harga_jual" required><br>
+                <button class="cursor-pointer p-1.5 bg-green-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30" type="submit">Simpan</button>
+            </form>
+        </main>
 
-    <h1 class="font-bold text-xl">Tambah Barang</h1>
-    <form method="POST">
-        Nama Barang: <input type="text" name="nama_barang" required><br>
-        Stok: <input type="number" name="stok" required><br>
-        Harga Beli: <input type="number" step="0.01" name="harga_beli" required><br>
-        Harga Jual: <input type="number" step="0.01" name="harga_jual" required><br>
-        <button type="submit">Simpan</button>
-    </form>
     </section>
 </body>
+
 </html>

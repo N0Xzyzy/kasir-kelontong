@@ -1,52 +1,88 @@
 <?php
 session_start();
-$id_user = $_SESSION['id_user'];
-
 include "../Config/koneksi.php";
+
+// Pastikan user login
+if (!isset($_SESSION['id_user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$id_user = $_SESSION['id_user'];
 
 // Ambil data barang
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-$sql_barang = "SELECT * FROM barang WHERE status = 'aktif' AND  nama_barang LIKE '%$search%'";
-$result_barang = $conn->query($sql_barang);
+$sql_barang = "SELECT * FROM barang WHERE status = 'aktif' AND nama_barang LIKE ?";
+$stmt_barang = $conn->prepare($sql_barang);
+$like = "%$search%";
+$stmt_barang->bind_param("s", $like);
+$stmt_barang->execute();
+$result_barang = $stmt_barang->get_result();
 
 // Proses transaksi
 if (isset($_POST['checkout'])) {
-    $metode = $_POST['metode_pembayaran'];
-    $total = $_POST['total_transaksi'];
-    $id_user = $_SESSION['id_user'];
+    $metode  = $_POST['metode_pembayaran']; // "Tunai" atau "Hutang"
+    $total   = $_POST['total_transaksi'];
+    $tanggal = date("Y-m-d"); 
+    $waktu   = date("Y-m-d H:i:s");
 
-    // 1. Simpan transaksi utama
-    $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, id_user) VALUES (NOW(), ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("dsi", $total, $metode, $id_user);
-    $stmt->execute();
+    try {
+        // Mulai transaction
+        $conn->begin_transaction();
 
-    $id_transaksi = $stmt->insert_id;
+        // 1. Simpan transaksi utama
+        $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, id_user) 
+                  VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sdsi", $waktu, $total, $metode, $id_user);
+        $stmt->execute();
+        $id_transaksi = $stmt->insert_id;
 
-    // 2. Simpan detail transaksi
-    foreach ($_POST['id_barang'] as $i => $id_barang) {
-        $jumlah = $_POST['jumlah'][$i];
-        $harga = $_POST['harga'][$i]; // <-- sekarang sudah ada
-        $subtotal = $jumlah * $harga;
+        // 2. Simpan detail transaksi
+        foreach ($_POST['id_barang'] as $i => $id_barang) {
+            $jumlah   = $_POST['jumlah'][$i];
+            $harga    = $_POST['harga'][$i];
+            $subtotal = $jumlah * $harga;
 
-        $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_barang, jumlah, harga_jual, subtotal) VALUES (?, ?, ?, ?, ?)";
-        $stmt_detail = $conn->prepare($query_detail);
-        $stmt_detail->bind_param("iiidd", $id_transaksi, $id_barang, $jumlah, $harga, $subtotal);
-        $stmt_detail->execute();
-    }
+            $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_barang, jumlah, harga_jual, subtotal) 
+                             VALUES (?, ?, ?, ?, ?)";
+            $stmt_detail = $conn->prepare($query_detail);
+            $stmt_detail->bind_param("iiidd", $id_transaksi, $id_barang, $jumlah, $harga, $subtotal);
+            $stmt_detail->execute();
+        }
 
-    // 3. Redirect
-    if ($metode === "Hutang") {
-        header("Location: tambahHutang.php?id_transaksi=" . $id_transaksi);
+        // 3. Simpan ke tabel pemasukan hanya jika metode = Tunai
+        if ($metode === "Tunai") {
+            $sql_pemasukan = "INSERT INTO pemasukan (id_sumber, jumlah, tanggal, sumber) 
+                              VALUES (?, ?, ?, ?)";
+            $stmt_pemasukan = $conn->prepare($sql_pemasukan);
+            $sumber = "transaksi";
+            $stmt_pemasukan->bind_param("idss", $id_transaksi, $total, $tanggal, $sumber);
+            $stmt_pemasukan->execute();
+        }
+
+        // Semua berhasil → commit
+        $conn->commit();
+
+        if ($metode === "Tunai") {
+            echo "<script>alert('Transaksi Tunai berhasil disimpan!'); window.location.href='transaksi.php';</script>";
+        } else {
+            header("Location: tambahHutang.php?id_transaksi=" . $id_transaksi);
+        }
         exit();
-    } else {
-        echo "<script>alert('Transaksi Tunai berhasil disimpan!'); window.location.href='index.php';</script>";
+
+    } catch (Exception $e) {
+        // Jika ada error, rollback
+        $conn->rollback();
+        die("Terjadi error: " . $e->getMessage());
     }
 }
 
-
 include '../Layout/sidebar.php';
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
