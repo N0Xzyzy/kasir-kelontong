@@ -40,32 +40,38 @@ include '../Layout/sidebar.php';
       <h1 class="font-bold text-xl">Pengeluaran</h1>
       <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700">
         <a href="tambahPengeluaran.php">+ Tambah Pengeluaran</a></button>
-      <table>
+      <table class="w-full">
+        <thead class="border-b border-gray-200 bg-gray-50">
         <tr>
-          <th>ID</th>
-          <th>Tanggal</th>
-          <th>Kategori</th>
-          <th>Keperluan</th>
-          <th>Jumlah Barang</th>
-          <th>Total</th>
-          <th>Supplier</th>
-          <th>Aksi</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">ID</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Tanggal</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Kategori</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Keperluan</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Jumlah Barang</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Total</th>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Supplier</th>
+          <?php if(isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner')) { ?>
+          <th class="p-3 text-sm font-semibold text-left text-gray-700">Aksi</th>
+          <?php } ?>
         </tr>
-        <tr>
+        </thead>
+        <tbody>
+        <tr class="odd:bg-white even:bg-gray-50">
           <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-            <td><?= $row['id_pengeluaran'] ?></td>
-            <td><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
-            <td><?= ucfirst($row['kategori']) ?></td>
-            <td><?= htmlspecialchars($row['keperluan']) ?></td>
-            <td><?= $row['jumlah'] ?></td>
-            <td><?= number_format($row['total'], 2, ',', '.') ?></td>
-            <td><?= htmlspecialchars($row['supplier']) ?></td>
-            <td>
-              <a href="editPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>">Edit</a> |
-              <a href="hapusPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+            <td class="p-3 text-sm text-gray-700"><?= $row['id_pengeluaran'] ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= ucfirst($row['kategori']) ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['keperluan']) ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= $row['jumlah'] ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= number_format($row['total'], 2, ',', '.') ?></td>
+            <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['supplier']) ?></td>
+            <td class="p-3 text-sm text-gray-700">
+              <a class="p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30 cursor-pointer" href="editPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>">Edit</a> |
+              <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer" href="hapusPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
             </td>
           <?php endwhile; ?>
         </tr>
+        </tbody>
       </table>
     </main>
   </div>

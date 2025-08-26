@@ -22,18 +22,25 @@
           <a href="../Views/hutang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>👥</span><span>Hutang</span>
           </a>
+          <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) {?>
           <a href="../Views/barang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📁</span><span>Barang</span>
           </a>
-          <a href="../Views/kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
-            <span>🗓️</span><span>Kelola User</span>
-          </a>
+          <?php } ?>
           <a href="../Views/pengeluaran.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📄</span><span>Pengeluaran</span>
           </a>
           <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
-            <span>📊</span><span>Reports</span>
+            <span>📊</span><span>Pemasukan</span>
           </a>
+          <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+            <span>📊</span><span>Laporan</span>
+          </a>
+          <?php if (isset($_SESSION['id_user']) && $_SESSION['role'] === 'owner') {?>
+          <a href="../Views/kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+            <span>🗓️</span><span>Kelola User</span>
+          </a>
+          <?php } ?>
           <a href="../Config/logout.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span></span><span>Logout</span>
           </a>

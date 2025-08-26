@@ -2,7 +2,7 @@
 // Mulai session sebelum HTML
 session_start();
 include '../Config/koneksi.php';
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
+if (!isset($_SESSION['id_user'])) {
     die("Akses ditolak. Anda bukan user.");
 }
 

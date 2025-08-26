@@ -49,7 +49,7 @@ include '../Layout/sidebar.php';
         }
         ?>
         <main class="p-6 pt-17 flex-1">
-<h2>Data User</h2>
+<h1 class="text-2xl font-bold">Data User</h2>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="notif-sukses" id="notif">
@@ -68,15 +68,12 @@ include '../Layout/sidebar.php';
         </script>
 
         <form method="GET">
-            <input type="text" name="search" placeholder="Cari username"
+            <div class="flex item-center mb-4 mt-4">
+                <input class="px-3 py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="text" name="search" placeholder="Cari username"
                 value="<?php echo htmlspecialchars($search); ?>">
-            <button class="cari" type="submit"><svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </g>
-                </svg></button>
+            <button class="cursor-pointer p-1.5 bg-blue-400 border-blue-400" type="submit">
+            </button>
+            </div>
             <a href="../user_management"><button class="reset" type="button"><svg fill="currentColor" width="15px" height="15px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#ff9500">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -87,44 +84,32 @@ include '../Layout/sidebar.php';
         </form>
 
         <div>
-            <table class="border-collapse table-auto" border="1">
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Aksi</th>
-                </tr>
-                <?php while ($row = $result->fetch_assoc()) { ?>
+            <table class="w-full">
+                <thead class="border-b border-gray-200 bg-gray-50">
                     <tr>
-                        <td>
-                            <?php echo $row['id_user']; ?>
-                        </td>
-                        <td>
-                            <?php echo $row['username']; ?>
-                        </td>
-                        <td>
-                            <?php echo $row['role']; ?>
-                        </td>
-                        <td>
+                        <th class="p-3 text-sm text-gray-700 text-left font-semibold">ID</th>
+                        <th class="p-3 text-sm text-gray-700 text-left font-semibold">Username</th>
+                        <th class="p-3 text-sm text-gray-700 text-left font-semibold">Role</th>
+                        <th class="p-3 text-sm text-gray-700 text-left font-semibold">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php while ($row = $result->fetch_assoc()) { ?>
+                    <tr class="odd:bg-white even:bg-gray-50">
+                        <td class="p-3 text-sm text-gray-700"><?php echo $row['id_user']; ?></td>
+                        <td class="p-3 text-sm text-gray-700"><?php echo $row['username']; ?></td>
+                        <td class="p-3 text-sm text-gray-700"><?php echo $row['role']; ?></td>
+                        <td class="p-3 text-sm text-gray-700">
                             <?php if ($row['username'] != $_SESSION['username']) { ?>
-                                <a href="hapusUser.php?id_user=<?php echo $row['id_user']; ?>"
-                                    onclick="return confirm('Yakin ingin menghapus user ini?')"><button class="btn-hapus"> <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                            <g id="SVGRepo_iconCarrier">
-                                                <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </g>
-                                        </svg>Hapus</button></a>
+                                <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer" href="hapusUser.php?id_user=<?php echo $row['id_user']; ?>"
+                                    onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
                             <?php } else { ?>
                                 <span style="color:gray;">Tidak bisa dihapus</span>
                             <?php } ?>
                         </td>
                     </tr>
                 <?php } ?>
+                </tbody>
             </table>
             <a class="add" href="tambahUser.php"><svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
