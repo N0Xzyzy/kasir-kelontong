@@ -105,14 +105,10 @@ include '../Layout/sidebar.php';
 
     <section class="flex-1 flex flex-col">
         <?php include '../Layout/header.php'; ?>
-
         <div class="flex p-6 pt-17">
-            <!-- Konfirmasi Transaksi -->
             <div class="w-1/3 p-4 bg-white border border-gray-300 rounded shadow h-screen flex flex-col">
                 <h2 class="text-xl font-bold mb-4">Konfirmasi Transaksi</h2>
                 <form method="POST" class="flex flex-col flex-1">
-
-                    <!-- Bagian atas: Total & tombol -->
                     <div class="">
                         <div id="totalHarga" class="text-lg font-bold">Total: Rp 0</div>
                         <input type="hidden" name="total_transaksi" id="total_transaksi" value="0">
@@ -133,14 +129,11 @@ include '../Layout/sidebar.php';
                         </button>
                     </div>
 
-
-                    <!-- Bagian bawah: Daftar barang -->
                     <div id="cartItems" class="flex-1 overflow-y-auto mt-4 space-y-3"></div>
                 </form>
             </div>
 
 
-            <!-- Kanan: Pilih Barang -->
             <div class="w-2/3 p-4">
                 <form method="GET" class="mb-4 flex">
                     <input type="text" name="search" placeholder="Cari barang..." value="<?= htmlspecialchars($search) ?>" class="flex-1 p-2 border rounded-l">

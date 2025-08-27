@@ -46,6 +46,7 @@ include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Tambah User</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -58,37 +59,41 @@ include '../Layout/sidebar.php';
         }
     </style>
 </head>
+
 <body class="h-full flex bg-gray-100">
 
-<div class="flex flex-col flex-1">
-    <?php include '../Layout/header.php';?>
-    <main class="p-6 pt-17 flex-1">
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-    <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>".htmlspecialchars($_GET['msg'])."</p>"; ?>
+    <div class="flex flex-col flex-1">
+        <?php include '../Layout/header.php'; ?>
+        <main class="p-6 pt-17 flex-1">
+            <div class="bg-white rounded-lg shadow p-6">
+                <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+                <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>" . htmlspecialchars($_GET['msg']) . "</p>"; ?>
+                <div class="form-wrapper">
+                    <h2>Tambah User</h2>
+                    <form method="POST" action="">
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role:</label>
+                            <select name="role">
+                                <option value="owner">Owner</option>
+                                <option value="operator">Operator</option>
+                                <option value="kasir">Kasir</option>
+                            </select>
+                        </div>
+                        <button type="submit">+ Tambah User</button>
+                        <a href="kelola_user.php">Kembali</a>
+                    </form>
+                </div>
+            </div>
+        </main>
 
-    <div class="form-wrapper">
-        <h2>Tambah User</h2>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label>Username:</label>
-                <input type="text" name="username" required>
-            </div>
-            <div class="form-group">
-                <label>Password:</label>
-                <input type="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label>Role:</label>
-                <select name="role">
-                    <option value="owner">Owner</option>
-                    <option value="operator">Operator</option>
-                    <option value="kasir">Kasir</option>
-                </select>
-            </div>
-            <button type="submit">+ Tambah User</button>
-        </form>
-    </div>
-</main>
-    
 </body>
+
 </html>

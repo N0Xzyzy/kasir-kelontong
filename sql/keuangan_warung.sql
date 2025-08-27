@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2025 at 01:54 PM
+-- Generation Time: Aug 27, 2025 at 03:20 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.12
 
@@ -77,7 +77,12 @@ INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `jumla
 (10, 15, 3, 1, 3000.00, 3000.00),
 (11, 16, 3, 1, 3000.00, 4500.00),
 (12, 17, 3, 1, 3000.00, 4500.00),
-(13, 18, 3, 0, 3000.00, 1500.00);
+(13, 18, 3, 0, 3000.00, 1500.00),
+(14, 19, 3, 3, 3000.00, 10500.00),
+(15, 20, 4, 5, 4000.00, 20000.00),
+(16, 21, 4, 1, 4000.00, 4000.00),
+(17, 21, 3, 1, 3000.00, 3000.00),
+(18, 22, 3, 1, 3000.00, 3000.00);
 
 -- --------------------------------------------------------
 
@@ -118,13 +123,6 @@ CREATE TABLE `laporan_keuangan` (
   `jumlah_transaksi` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `laporan_keuangan`
---
-
-INSERT INTO `laporan_keuangan` (`id_laporan`, `tanggal`, `total_pemasukan`, `total_pengeluaran`, `laba`, `jumlah_transaksi`) VALUES
-(1, '2025-08-26', 0.00, 0.00, 0.00, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -136,8 +134,18 @@ CREATE TABLE `pemasukan` (
   `tanggal` date NOT NULL,
   `jumlah` decimal(12,2) NOT NULL,
   `sumber` enum('transaksi','pelunasan_hutang','lainnya') NOT NULL,
-  `id_sumber` int DEFAULT NULL
+  `id_sumber` int DEFAULT NULL,
+  `id_laporan` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `pemasukan`
+--
+
+INSERT INTO `pemasukan` (`id`, `tanggal`, `jumlah`, `sumber`, `id_sumber`, `id_laporan`) VALUES
+(3, '2025-08-26', 10500.00, 'transaksi', 19, NULL),
+(4, '2025-08-27', 20000.00, 'transaksi', 20, NULL),
+(5, '2025-08-27', 7000.00, 'transaksi', 21, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,7 +160,8 @@ CREATE TABLE `pengeluaran` (
   `keperluan` varchar(255) NOT NULL,
   `jumlah` int DEFAULT NULL,
   `total` decimal(12,2) NOT NULL,
-  `supplier` varchar(100) DEFAULT NULL
+  `supplier` varchar(100) DEFAULT NULL,
+  `id_laporan` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -182,7 +191,11 @@ INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total_transaksi`, `metode_p
 (15, '2025-08-26', 3000.00, 'Tunai', 2),
 (16, '2025-08-26', 4500.00, 'Tunai', 2),
 (17, '2025-08-26', 4500.00, 'Tunai', 2),
-(18, '2025-08-26', 1500.00, 'Tunai', 2);
+(18, '2025-08-26', 1500.00, 'Tunai', 2),
+(19, '2025-08-26', 10500.00, 'Tunai', 2),
+(20, '2025-08-27', 20000.00, 'Tunai', 2),
+(21, '2025-08-27', 7000.00, 'Tunai', 2),
+(22, '2025-08-27', 3000.00, 'Hutang', 2);
 
 -- --------------------------------------------------------
 
@@ -234,22 +247,24 @@ ALTER TABLE `hutang_pelanggan`
 --
 ALTER TABLE `laporan_keuangan`
   ADD PRIMARY KEY (`id_laporan`),
-  ADD UNIQUE KEY `tanggal` (`tanggal`);
+  ADD UNIQUE KEY `tanggal` (`tanggal`),
+  ADD UNIQUE KEY `unique_tanggal` (`tanggal`);
 
 --
 -- Indexes for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pemasukan_laporan` (`tanggal`),
-  ADD KEY `fk_pemasukan_transaksi` (`id_sumber`);
+  ADD KEY `fk_pemasukan_transaksi` (`id_sumber`),
+  ADD KEY `fk_pemasukan_laporan` (`id_laporan`);
 
 --
 -- Indexes for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`),
-  ADD KEY `fk_pengeluaran_laporan` (`tanggal`);
+  ADD KEY `fk_pengeluaran_laporan` (`tanggal`),
+  ADD KEY `fk_pengeluaran_laporan2` (`id_laporan`);
 
 --
 -- Indexes for table `transaksi`
@@ -279,7 +294,7 @@ ALTER TABLE `barang`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `hutang_pelanggan`
@@ -297,7 +312,7 @@ ALTER TABLE `laporan_keuangan`
 -- AUTO_INCREMENT for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pengeluaran`
@@ -309,7 +324,7 @@ ALTER TABLE `pengeluaran`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -338,13 +353,14 @@ ALTER TABLE `hutang_pelanggan`
 -- Constraints for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
+  ADD CONSTRAINT `fk_pemasukan_laporan` FOREIGN KEY (`id_laporan`) REFERENCES `laporan_keuangan` (`id_laporan`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_pemasukan_transaksi` FOREIGN KEY (`id_sumber`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  ADD CONSTRAINT `fk_pengeluaran_laporan` FOREIGN KEY (`tanggal`) REFERENCES `laporan_keuangan` (`tanggal`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_pengeluaran_laporan2` FOREIGN KEY (`id_laporan`) REFERENCES `laporan_keuangan` (`id_laporan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi`

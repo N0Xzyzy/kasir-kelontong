@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../Layout/sidebar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,37 +39,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
 </head>
+
 <body class="h-full flex bg-gray-100">
     <div class="flex flex-col flex-1">
-        <?php include '../Layout/header.php';?>
+        <?php include '../Layout/header.php'; ?>
         <main class="flex-1 pt-17 p-6">
-            <h1 class="font-bold text-xl mb-4">Tambah Pengeluaran</h1>
-            <form method="POST">
-                <label for="tanggal">Tanggal:</label>
-                <input type="date" name="tanggal" required> <br>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h1 class="font-bold text-xl mb-4">Tambah Pengeluaran</h1>
+                <form method="POST">
+                    <label for="tanggal">Tanggal:</label>
+                    <input type="date" name="tanggal" required> <br>
 
-                <label for="kategori">Kategori:</label>
-                <select name="kategori" required>
-                    <option value="Belanja">Belanja</option>
-                    <option value="Operasional">Operasional</option>
-                    <option value="Lain-lain">Lain-lain</option>
-                </select><br>
+                    <label for="kategori">Kategori:</label>
+                    <select name="kategori" required>
+                        <option value="Belanja">Belanja</option>
+                        <option value="Operasional">Operasional</option>
+                        <option value="Lain-lain">Lain-lain</option>
+                    </select><br>
 
-                <label for="keperluan">Keperluan:</label>
-                <input type="text" name="keperluan" required><br>
+                    <label for="keperluan">Keperluan:</label>
+                    <input type="text" name="keperluan" required><br>
 
-                <label for="jumlah">Jumlah:</label>
-                <input type="number" name="jumlah"><br>
+                    <label for="jumlah">Jumlah:</label>
+                    <input type="number" name="jumlah"><br>
 
-                <label for="total">Total:</label>
-                <input type="number" name="total" required><br>
+                    <label for="total">Total:</label>
+                    <input type="number" name="total" required><br>
 
-                <label for="supplier">Supplier:</label>
-                <input type="text" name="supplier"><br>
+                    <label for="supplier">Supplier:</label>
+                    <input type="text" name="supplier"><br>
 
-                <button type="submit">Simpan</button>
-            </form>
+                    <button type="submit">Simpan</button>
+                </form>
+            </div>
+
         </main>
     </div>
 </body>
+
 </html>

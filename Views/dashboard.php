@@ -12,6 +12,7 @@ include '../Layout/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,17 +27,21 @@ include '../Layout/sidebar.php';
         }
     </style>
 </head>
+
 <body class="bg-gray-100 h-screen flex">
 
 
-<section class="flex-1 flex flex-col">
-    <?php include '../Layout/header.php';?>
+    <section class="flex-1 flex flex-col">
+        <?php include '../Layout/header.php'; ?>
 
-    <main class="p-6 pt-17 flex-1">
-        <h1 class="text-lg font-bold">Selamat datang!</h1>
-        <p class="text-gray-600">Ini adalah halaman dashboard kamu.</p>
-    </main>
-</section>
+        <main class="p-6 pt-17 flex-1">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h1 class="text-lg font-bold">Selamat datang!</h1>
+                <p class="text-gray-600">Ini adalah halaman dashboard kamu.</p>
+            </div>
+        </main>
+    </section>
 
 </body>
+
 </html>

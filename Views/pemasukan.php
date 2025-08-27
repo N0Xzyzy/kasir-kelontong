@@ -37,6 +37,19 @@ switch ($periode) {
                 ORDER BY tahun DESC";
         break;
 
+    case 'transaksi':
+        $sql = "SELECT 
+            t.id_transaksi,
+            t.tanggal,
+            t.total_transaksi,
+            t.metode_pembayaran,
+            u.username AS kasir
+        FROM transaksi t
+        LEFT JOIN users u ON t.id_user = u.id_user
+        ORDER BY t.tanggal DESC, t.id_transaksi DESC";
+
+        break;
+
     case 'hari':
     default:
         $sql = "SELECT DATE(tanggal) AS label, 
@@ -55,7 +68,11 @@ $data = [];
 $totalPemasukan = 0;
 while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
-    $totalPemasukan += $row['pemasukan'];
+    if ($periode != 'transaksi') {
+        $totalPemasukan += $row['pemasukan'];
+    } else {
+        $totalPemasukan += $row['total_transaksi'];
+    }
 }
 ?>
 
@@ -91,57 +108,89 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <option value="minggu" <?= $periode == 'minggu' ? 'selected' : '' ?>>Mingguan</option>
                             <option value="bulan" <?= $periode == 'bulan' ? 'selected' : '' ?>>Bulanan</option>
                             <option value="tahun" <?= $periode == 'tahun' ? 'selected' : '' ?>>Tahunan</option>
+                            <option value="transaksi" <?= $periode == 'transaksi' ? 'selected' : '' ?>>Per Transaksi</option>
                         </select>
                     </div>
                 </form>
 
                 <div class="bg-white shadow rounded-lg overflow-hidden">
                     <table class="w-full">
-                        <thead class="bg-gray-50 border-b border-gray-200">
-                            <tr>
-                                <th class="p-3 font-semibold text-gray-700 text-left text-sm">Periode</th>
-                                <th class="p-3 font-semibold text-gray-700 text-left text-sm">Sumber</th>
-                                <th class="p-3 font-semibold text-gray-700 text-left text-sm">Jumlah</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($data as $row): ?>
-                                <tr class="odd:bg-white even:bg-gray-50">
-                                    <td class="p-3 text-gray-700 font-semibold text-sm">
-                                        <?php
-                                        if ($periode == 'bulan') {
-                                            echo $row['bulan'] . '-' . $row['tahun'];
-                                        } elseif ($periode == 'tahun') {
-                                            echo $row['tahun'];
-                                        } elseif ($periode == 'minggu') {
-                                            echo date('d-m-Y', strtotime($row['mulai'])) . " s/d " . date('d-m-Y', strtotime($row['akhir']));
-                                        } else {
-                                            echo $row['label'];
-                                        }
-                                        ?>
+                        <?php if ($periode == 'transaksi'): ?>
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">ID Transaksi</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Tanggal</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Metode</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Kasir</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Total</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($data as $row): ?>
+                                    <tr class="odd:bg-white even:bg-gray-50">
+                                        <td class="p-3 text-sm"><?= $row['id_transaksi'] ?></td>
+                                        <td class="p-3 text-sm"><?= $row['tanggal'] ?></td>
+                                        <td class="p-3 text-sm"><?= $row['metode_pembayaran'] ?></td>
+                                        <td class="p-3 text-sm"><?= $row['kasir'] ?? '-' ?></td>
+                                        <td class="p-3 text-sm">Rp <?= number_format($row['total_transaksi'], 0, ',', '.') ?></td>
+                                        <td class="p-3 text-sm">
+                                            <a href="detail_transaksi.php?id_transaksi=<?= $row['id_transaksi'] ?>" class="text-blue-600 hover:underline">Lihat Detail</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <tr class="bg-gray-200">
+                                    <td colspan="4" class="p-3 text-gray-700 text-right font-bold text-sm">Jumlah Pemasukan</td>
+                                    <td class="p-3 text-gray-700 text-left font-bold text-sm">
+                                        Rp <?= number_format($totalPemasukan, 0, ',', '.') ?>
                                     </td>
-                                    <td class="p-3 text-gray-700 font-semibold text-sm">
-                                        <?= ucfirst($row['sumber']) ?>
-                                    </td>
-                                    <td class="p-3 text-gray-700 font-semibold text-sm">
-                                        Rp <?= number_format($row['pemasukan'], 0, ',', '.') ?>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        <?php else: ?>
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Periode</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Sumber</th>
+                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($data as $row): ?>
+                                    <tr class="odd:bg-white even:bg-gray-50">
+                                        <td class="p-3 text-gray-700 font-semibold text-sm">
+                                            <?php
+                                            if ($periode == 'bulan') {
+                                                echo $row['bulan'] . '-' . $row['tahun'];
+                                            } elseif ($periode == 'tahun') {
+                                                echo $row['tahun'];
+                                            } elseif ($periode == 'minggu') {
+                                                echo date('d-m-Y', strtotime($row['mulai'])) . " s/d " . date('d-m-Y', strtotime($row['akhir']));
+                                            } else {
+                                                echo $row['label'];
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="p-3 text-gray-700 font-semibold text-sm">
+                                            <?= ucfirst($row['sumber']) ?>
+                                        </td>
+                                        <td class="p-3 text-gray-700 font-semibold text-sm">
+                                            Rp <?= number_format($row['pemasukan'], 0, ',', '.') ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <tr class="bg-gray-200">
+                                    <td colspan="2" class="p-3 text-gray-700 text-right font-bold text-sm">Jumlah Pemasukan</td>
+                                    <td class="p-3 text-gray-700 text-left font-bold text-sm">
+                                        Rp <?= number_format($totalPemasukan, 0, ',', '.') ?>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
-                            <tr class="bg-gray-200">
-                                <td colspan="2" class="p-3 text-gray-700 text-right font-bold text-sm">Jumlah Pemasukan</td>
-                                <td class="p-3 text-gray-700 text-left font-bold text-sm">
-                                    Rp <?= number_format($totalPemasukan, 0, ',', '.') ?>
-                                </td>
-                            </tr>
-                        </tbody>
+                            </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>
-
         </main>
     </div>
-
 </body>
-
 </html>
