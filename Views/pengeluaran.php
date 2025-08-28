@@ -62,8 +62,8 @@ include '../Layout/sidebar.php';
             </tr>
           </thead>
           <tbody>
+            <?php while ($row = mysqli_fetch_assoc($query)) : ?>
             <tr class="odd:bg-white even:bg-gray-50">
-              <?php while ($row = mysqli_fetch_assoc($query)) : ?>
                 <td class="p-3 text-sm text-gray-700"><?= $row['id_pengeluaran'] ?></td>
                 <td class="p-3 text-sm text-gray-700"><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
                 <td class="p-3 text-sm text-gray-700"><?= ucfirst($row['kategori']) ?></td>
@@ -75,8 +75,8 @@ include '../Layout/sidebar.php';
                   <a class="p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30 cursor-pointer" href="editPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>">Edit</a> |
                   <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer" href="hapusPengeluaran.php?id_pengeluaran=<?= $row['id_pengeluaran'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                 </td>
-              <?php endwhile; ?>
             </tr>
+            <?php endwhile; ?>
           </tbody>
           <tfoot>
             <tr class="bg-gray-100 font-bold ">

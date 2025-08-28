@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         stok='$stok', 
         harga_beli='$harga_beli', 
         harga_jual='$harga_jual',
-        status= '$status'
+        status = '$status'
         WHERE id_barang=$id");
 
     header("Location: barang.php");
@@ -49,18 +49,21 @@ include "../Layout/sidebar.php"
     <div class="flex flex-col flex-1">
         <?php include "../Layout/header.php"; ?>
         <main class="flex-1 pt-17 p-6">
-            <h1 class="text-xl">Edit Barang</h1>
-            <form method="POST">
-                Nama Barang: <input type="text" name="nama_barang" value="<?= htmlspecialchars($barang['nama_barang']) ?>" required><br>
-                Stok: <input type="number" name="stok" value="<?= $barang['stok'] ?>" required><br>
-                Harga Beli: <input type="number" step="0.01" name="harga_beli" value="<?= $barang['harga_beli'] ?>" required><br>
-                Harga Jual: <input type="number" step="0.01" name="harga_jual" value="<?= $barang['harga_jual'] ?>" required><br>
-                Status: <select name="status">
-                    <option value="aktif">Aktif</option>
-                    <option value="nonaktif">nonaktif</option>
-                </select>
-                <button type="submit">Update</button>
-            </form>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h1 class="text-2xl font-bold mb-3">Edit Barang</h1>
+                    <form method="POST">
+                        Nama Barang: <input type="text" name="nama_barang" value="<?= htmlspecialchars($barang['nama_barang']) ?>" required><br>
+                        Stok: <input type="number" name="stok" value="<?= $barang['stok'] ?>" required><br>
+                        Harga Beli: <input type="number" step="0.01" name="harga_beli" value="<?= $barang['harga_beli'] ?>" required><br>
+                        Harga Jual: <input type="number" step="0.01" name="harga_jual" value="<?= $barang['harga_jual'] ?>" required><br>
+                        Status: <select name="status">
+                            <option value="aktif">Aktif</option>
+                            <option value="nonaktif">nonaktif</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+            </div>
+            
         </main>
     </div>
 

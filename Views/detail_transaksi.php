@@ -5,13 +5,11 @@ use BcMath\Number;
 session_start();
 include "../Config/koneksi.php";
 
-// Ambil id_transaksi dari URL
 if (!isset($_GET['id_transaksi'])) {
     die("ID transaksi tidak ditemukan.");
 }
 $id_transaksi = intval($_GET['id_transaksi']);
 
-// Ambil data transaksi
 $sqlTransaksi = "SELECT * FROM transaksi WHERE id_transaksi = $id_transaksi";
 $resultTransaksi = mysqli_query($conn, $sqlTransaksi);
 $transaksi = mysqli_fetch_assoc($resultTransaksi);
@@ -20,7 +18,6 @@ if (!$transaksi) {
     die("Transaksi tidak ditemukan.");
 }
 
-// Ambil detail transaksi + nama barang
 $sqlDetail = "SELECT 
                 dt.id_detail,
                 b.nama_barang,
@@ -61,22 +58,22 @@ include '../Layout/sidebar.php';
         <p><strong>Total:</strong> Rp<?= number_format($transaksi['total_transaksi'], 0, ',', '.') ?></p>
 
         <h2 class="text-xl font-semibold mt-6 mb-2">Barang yang Dibeli</h2>
-        <table class="w-full border border-gray-300 text-left">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="px-4 py-2 border">Nama Barang</th>
-                    <th class="px-4 py-2 border">Jumlah</th>
-                    <th class="px-4 py-2 border">Harga Jual</th>
-                    <th class="px-4 py-2 border">Subtotal</th>
+        <table class="w-full">
+            <thead class="bg-gray-100 border-b border-gray-200">
+                <tr>
+                    <th class="p-3 text-gray-700 text-sm font-semibold text-left tracking-wide">Nama Barang</th>
+                    <th class="p-3 text-gray-700 text-sm font-semibold text-left tracking-wide">Jumlah</th>
+                    <th class="p-3 text-gray-700 text-sm font-semibold text-left tracking-wide">Harga Jual</th>
+                    <th class="p-3 text-gray-700 text-sm font-semibold text-left tracking-wide">Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = mysqli_fetch_assoc($resultDetail)) { ?>
-                <tr>
-                    <td class="px-4 py-2 border"><?= $row['nama_barang'] ?></td>
-                    <td class="px-4 py-2 border"><?= number_format($row['jumlah'], 2, ',', '.') ?></td>
-                    <td class="px-4 py-2 border">Rp<?= number_format($row['harga_jual'], 0, ',', '.') ?></td>
-                    <td class="px-4 py-2 border">Rp<?= number_format($row['subtotal'], 0, ',', '.') ?></td>
+                <tr class="odd:bg-white even:bg-gray-100">
+                    <td class="p-3 text-gray-700 tracking-wide font-sm"><?= $row['nama_barang'] ?></td>
+                    <td class="p-3 text-gray-700 tracking-wide font-sm"><?= number_format($row['jumlah'], 2, ',', '.') ?></td>
+                    <td class="p-3 text-gray-700 tracking-wide font-sm">Rp<?= number_format($row['harga_jual'], 0, ',', '.') ?></td>
+                    <td class="p-3 text-gray-700 tracking-wide font-sm">Rp<?= number_format($row['subtotal'], 0, ',', '.') ?></td>
                 </tr>
                 <?php } ?>
             </tbody>

@@ -33,7 +33,7 @@
           <a href="../Views/pemasukan.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
             <span>📊</span><span>Pemasukan</span>
           </a>
-          <a href="#" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+          <a href="../Views/laporan.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
             <span>📊</span><span>Laporan</span>
           </a>
           <?php if (isset($_SESSION['id_user']) && $_SESSION['role'] === 'owner') {?>

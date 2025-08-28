@@ -2,7 +2,6 @@
 session_start();
 include "../Config/koneksi.php";
 
-// Pastikan user login
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
@@ -10,7 +9,6 @@ if (!isset($_SESSION['id_user'])) {
 
 $id_user = $_SESSION['id_user'];
 
-// Ambil data barang
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sql_barang = "SELECT * FROM barang WHERE status = 'aktif' AND nama_barang LIKE ?";
 $stmt_barang = $conn->prepare($sql_barang);
@@ -19,18 +17,15 @@ $stmt_barang->bind_param("s", $like);
 $stmt_barang->execute();
 $result_barang = $stmt_barang->get_result();
 
-// Proses transaksi
 if (isset($_POST['checkout'])) {
-    $metode  = $_POST['metode_pembayaran']; // "Tunai" atau "Hutang"
+    $metode  = $_POST['metode_pembayaran'];
     $total   = $_POST['total_transaksi'];
     $tanggal = date("Y-m-d"); 
     $waktu   = date("Y-m-d H:i:s");
 
     try {
-        // Mulai transaction
         $conn->begin_transaction();
 
-        // 1. Simpan transaksi utama
         $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, id_user) 
                   VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
@@ -38,7 +33,6 @@ if (isset($_POST['checkout'])) {
         $stmt->execute();
         $id_transaksi = $stmt->insert_id;
 
-        // 2. Simpan detail transaksi
         foreach ($_POST['id_barang'] as $i => $id_barang) {
             $jumlah   = $_POST['jumlah'][$i];
             $harga    = $_POST['harga'][$i];
@@ -51,17 +45,16 @@ if (isset($_POST['checkout'])) {
             $stmt_detail->execute();
         }
 
-        // 3. Simpan ke tabel pemasukan hanya jika metode = Tunai
         if ($metode === "Tunai") {
-            $sql_pemasukan = "INSERT INTO pemasukan (id_sumber, jumlah, tanggal, sumber) 
-                              VALUES (?, ?, ?, ?)";
+            $sql_pemasukan = "INSERT INTO pemasukan (id_transaksi, jumlah, tanggal, sumber) 
+                            VALUES (?, ?, ?, ?)";
             $stmt_pemasukan = $conn->prepare($sql_pemasukan);
             $sumber = "transaksi";
             $stmt_pemasukan->bind_param("idss", $id_transaksi, $total, $tanggal, $sumber);
             $stmt_pemasukan->execute();
         }
 
-        // Semua berhasil → commit
+
         $conn->commit();
 
         if ($metode === "Tunai") {
@@ -72,7 +65,6 @@ if (isset($_POST['checkout'])) {
         exit();
 
     } catch (Exception $e) {
-        // Jika ada error, rollback
         $conn->rollback();
         die("Terjadi error: " . $e->getMessage());
     }
@@ -220,7 +212,7 @@ include '../Layout/sidebar.php';
             });
 
             totalHargaContainer.innerHTML = `Total: Rp ${totalHarga.toLocaleString()}`;
-            hiddenTotal.value = totalHarga; // <-- ini yang penting
+            hiddenTotal.value = totalHarga;
         }
 
 

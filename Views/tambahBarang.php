@@ -40,10 +40,10 @@ include '../Layout/sidebar.php';
             <div class="bg-white rounded-lg shadow p-6">
                 <h1 class="font-bold text-xl">Tambah Barang</h1>
                 <form method="POST">
-                    Nama Barang: <input type="text" name="nama_barang" required><br>
-                    Stok: <input type="number" name="stok" required><br>
-                    Harga Beli: <input type="number" step="0.01" name="harga_beli" required><br>
-                    Harga Jual: <input type="number" step="0.01" name="harga_jual" required><br>
+                    Nama Barang: <input class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="text" name="nama_barang" required><br>
+                    Stok: <input class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="number" name="stok" required><br>
+                    Harga Beli: <input class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="number" step="0.01" name="harga_beli" required><br>
+                    Harga Jual: <input class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="number" step="0.01" name="harga_jual" required><br>
                     <button class="cursor-pointer p-1.5 bg-green-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30" type="submit">Simpan</button>
                 </form>
             </div>

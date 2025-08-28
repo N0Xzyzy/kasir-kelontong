@@ -8,7 +8,6 @@ if (!isset($_GET['id_transaksi'])) {
 
 $id_transaksi = intval($_GET['id_transaksi']);
 
-// Ambil data transaksi utama
 $query_transaksi = "SELECT * FROM transaksi WHERE id_transaksi = ?";
 $stmt = $conn->prepare($query_transaksi);
 $stmt->bind_param("i", $id_transaksi);
@@ -16,7 +15,6 @@ $stmt->execute();
 $result_transaksi = $stmt->get_result();
 $transaksi = $result_transaksi->fetch_assoc();
 
-// Ambil detail transaksi
 $query_detail = "SELECT dt.*, b.nama_barang 
                  FROM detail_transaksi dt
                  JOIN barang b ON dt.id_barang = b.id_barang
@@ -26,7 +24,6 @@ $stmt_detail->bind_param("i", $id_transaksi);
 $stmt_detail->execute();
 $result_detail = $stmt_detail->get_result();
 
-// Jika form disubmit
 if (isset($_POST['simpan_hutang'])) {
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $jumlah_hutang = $_POST['jumlah_hutang'];

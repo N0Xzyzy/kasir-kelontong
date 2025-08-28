@@ -73,15 +73,9 @@ include '../Layout/sidebar.php';
                             <input class="px-3 py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="text" name="search" placeholder="Cari username"
                                 value="<?php echo htmlspecialchars($search); ?>">
                             <button class="cursor-pointer p-1.5 bg-blue-400 border-blue-400" type="submit">
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                             </button>
                         </div>
-                        <a href="../user_management"><button class="reset" type="button"><svg fill="currentColor" width="15px" height="15px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#ff9500">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path d="M960 0v213.333c411.627 0 746.667 334.934 746.667 746.667S1371.627 1706.667 960 1706.667 213.333 1371.733 213.333 960c0-197.013 78.4-382.507 213.334-520.747v254.08H640V106.667H53.333V320h191.04C88.64 494.08 0 720.96 0 960c0 529.28 430.613 960 960 960s960-430.72 960-960S1489.387 0 960 0" fill-rule="evenodd"></path>
-                                    </g>
-                                </svg></button></a>
                     </form>
 
                     <div>
@@ -112,7 +106,7 @@ include '../Layout/sidebar.php';
                                 <?php } ?>
                             </tbody>
                         </table>
-                        <a class="p-1.5 bg-green-500 text-white text-xl font-semibold rounded-md" href="tambahUser.php">User</a>
+                        <a class="p-1.5 bg-green-500 text-white text-xl font-semibold rounded-md tracking-wide" href="tambahUser.php">Tambah User</a>
                     </div>
             </div>
         </main>

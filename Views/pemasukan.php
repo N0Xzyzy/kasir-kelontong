@@ -14,6 +14,7 @@ switch ($periode) {
                        SUM(jumlah) AS pemasukan,
                        sumber
                 FROM pemasukan
+                WHERE sumber != 'hutang'
                 GROUP BY YEARWEEK(tanggal, 1), sumber
                 ORDER BY YEARWEEK(tanggal, 1) DESC";
         break;
@@ -24,6 +25,7 @@ switch ($periode) {
                        SUM(jumlah) AS pemasukan,
                        sumber
                 FROM pemasukan
+                WHERE sumber != 'hutang'
                 GROUP BY YEAR(tanggal), MONTH(tanggal), sumber
                 ORDER BY tahun DESC, bulan DESC";
         break;
@@ -33,29 +35,41 @@ switch ($periode) {
                        SUM(jumlah) AS pemasukan,
                        sumber
                 FROM pemasukan
+                WHERE sumber != 'hutang'
                 GROUP BY YEAR(tanggal), sumber
                 ORDER BY tahun DESC";
         break;
 
-    case 'transaksi':
-        $sql = "SELECT 
-            t.id_transaksi,
-            t.tanggal,
-            t.total_transaksi,
-            t.metode_pembayaran,
-            u.username AS kasir
-        FROM transaksi t
-        LEFT JOIN users u ON t.id_user = u.id_user
-        ORDER BY t.tanggal DESC, t.id_transaksi DESC";
-
-        break;
-
+        case 'transaksi':
+            $sql = "
+                SELECT 
+                    t.id_transaksi,
+                    t.tanggal,
+                    t.total_transaksi AS total_transaksi,
+                    t.metode_pembayaran
+                FROM transaksi t
+                WHERE t.metode_pembayaran != 'hutang'
+        
+                UNION ALL
+        
+                SELECT 
+                    h.id AS id_transaksi,
+                    h.tanggal_jatuh_tempo AS tanggal,
+                    h.jumlah_hutang AS total_transaksi,
+                    'pelunasan_hutang' AS metode_pembayaran
+                FROM hutang_pelanggan h
+                WHERE h.status = 'lunas'
+        
+                ORDER BY tanggal DESC, id_transaksi DESC
+            ";
+            break;
     case 'hari':
     default:
         $sql = "SELECT DATE(tanggal) AS label, 
                        SUM(jumlah) AS pemasukan,
                        sumber
                 FROM pemasukan
+                WHERE sumber != 'hutang'
                 GROUP BY DATE(tanggal), sumber
                 ORDER BY DATE(tanggal) DESC";
         break;
@@ -121,7 +135,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <th class="p-3 font-semibold text-gray-700 text-left text-sm">ID Transaksi</th>
                                     <th class="p-3 font-semibold text-gray-700 text-left text-sm">Tanggal</th>
                                     <th class="p-3 font-semibold text-gray-700 text-left text-sm">Metode</th>
-                                    <th class="p-3 font-semibold text-gray-700 text-left text-sm">Kasir</th>
                                     <th class="p-3 font-semibold text-gray-700 text-left text-sm">Total</th>
                                     <th class="p-3 font-semibold text-gray-700 text-left text-sm">Aksi</th>
                                 </tr>
@@ -132,7 +145,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         <td class="p-3 text-sm"><?= $row['id_transaksi'] ?></td>
                                         <td class="p-3 text-sm"><?= $row['tanggal'] ?></td>
                                         <td class="p-3 text-sm"><?= $row['metode_pembayaran'] ?></td>
-                                        <td class="p-3 text-sm"><?= $row['kasir'] ?? '-' ?></td>
                                         <td class="p-3 text-sm">Rp <?= number_format($row['total_transaksi'], 0, ',', '.') ?></td>
                                         <td class="p-3 text-sm">
                                             <a href="detail_transaksi.php?id_transaksi=<?= $row['id_transaksi'] ?>" class="text-blue-600 hover:underline">Lihat Detail</a>

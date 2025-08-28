@@ -2,28 +2,23 @@
 session_start();
 include '../Config/koneksi.php';
 
-// Cek apakah user login dan role = owner
 if (!isset($_SESSION['username']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
 
-// Pastikan parameter id_user ada
 if (isset($_GET['id_user'])) {
     $id_user = (int) $_GET['id_user'];
 
-    // Tidak boleh hapus akun sendiri
     if ($id_user == $_SESSION['id_user']) {
         die("Anda tidak bisa menghapus akun Anda sendiri!");
     }
 
-    // Cek apakah user ada
     $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE id_user = ?");
     $check_stmt->bind_param("i", $id_user);
     $check_stmt->execute();
     $result = $check_stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Hapus user
         $stmt = $conn->prepare("DELETE FROM users WHERE id_user = ?");
         $stmt->bind_param("i", $id_user);
 
@@ -36,7 +31,6 @@ if (isset($_GET['id_user'])) {
         $_SESSION['msg'] = "User tidak ditemukan!";
     }
 
-    // Redirect kembali ke halaman sebelumnya
     header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 } else {
