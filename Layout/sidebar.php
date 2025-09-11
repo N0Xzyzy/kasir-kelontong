@@ -12,7 +12,7 @@
           </span>
         </div>
 
-        <nav class="space-y-1.5 text-md font-semibold leading-normal">
+        <nav class="space-y-1.5 text-md font-semibold leading-7">
           <a href="../Views/dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
             <span>🏠</span><span>Dashboard</span>
           </a>
