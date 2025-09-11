@@ -69,26 +69,26 @@ include '../Layout/sidebar.php';
                 <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
                 <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>" . htmlspecialchars($_GET['msg']) . "</p>"; ?>
                 <div class="form-wrapper">
-                    <h2>Tambah User</h2>
+                    <h2 class="font-bold text-2xl">Tambah User</h2>
                     <form method="POST" action="">
                         <div class="form-group">
                             <label>Username:</label>
-                            <input type="text" name="username" required>
+                            <input type="text" name="username" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2">
                         </div>
                         <div class="form-group">
                             <label>Password:</label>
-                            <input type="password" name="password" required>
+                            <input type="password" name="password" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2">
                         </div>
                         <div class="form-group">
                             <label>Role:</label>
-                            <select name="role">
+                            <select name="role" class="border rounded p-2">
                                 <option value="owner">Owner</option>
                                 <option value="operator">Operator</option>
                                 <option value="kasir">Kasir</option>
                             </select>
                         </div>
-                        <button type="submit">+ Tambah User</button>
-                        <a href="kelola_user.php">Kembali</a>
+                        <button type="submit" class="cursor-pointer p-1.5 bg-green-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30 ">+ Tambah User</button>
+                        <a href="kelola_user.php" class="cursor-pointer p-1.5 bg-red-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30 ">Kembali</a>
                     </form>
                 </div>
             </div>

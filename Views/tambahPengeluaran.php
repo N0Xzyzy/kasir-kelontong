@@ -48,26 +48,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1 class="font-bold text-xl mb-4">Tambah Pengeluaran</h1>
                 <form method="POST">
                     <label for="tanggal">Tanggal:</label>
-                    <input type="date" name="tanggal" required> <br>
+                    <input type="date" name="tanggal" required class="border rounded p-2"> <br>
 
                     <label for="kategori">Kategori:</label>
-                    <select name="kategori" required>
+                    <select name="kategori" required class="border rounded p-2">
                         <option value="Belanja">Belanja</option>
                         <option value="Operasional">Operasional</option>
                         <option value="Lain-lain">Lain-lain</option>
                     </select><br>
 
                     <label for="keperluan">Keperluan:</label>
-                    <input type="text" name="keperluan" required><br>
+                    <input type="text" name="keperluan" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2"><br>
 
                     <label for="jumlah">Jumlah:</label>
-                    <input type="number" name="jumlah"><br>
+                    <input type="number" name="jumlah" class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2"><br>
 
                     <label for="total">Total:</label>
-                    <input type="number" name="total" required><br>
+                    <input type="number" name="total" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2"><br>
 
                     <label for="supplier">Supplier:</label>
-                    <input type="text" name="supplier"><br>
+                    <input type="text" name="supplier" class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2"><br>
 
                     <button type="submit">Simpan</button>
                 </form>
