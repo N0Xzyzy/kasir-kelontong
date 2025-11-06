@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<?php include '../Layout/sidebar.php'; ?>
+<?php include '../Layout/sidebar.php';
+include '../Layout/footer.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 

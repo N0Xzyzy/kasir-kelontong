@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 <!DOCTYPE html>
 <html>

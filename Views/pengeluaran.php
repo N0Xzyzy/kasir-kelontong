@@ -13,6 +13,7 @@ $totalRow = mysqli_fetch_assoc($totalPengeluaran);
 $grandTotal = $totalRow['total_semua'] ?? 0;
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 
 <!DOCTYPE html>

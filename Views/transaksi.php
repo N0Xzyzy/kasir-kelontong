@@ -71,6 +71,7 @@ if (isset($_POST['checkout'])) {
 }
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 
 

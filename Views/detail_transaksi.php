@@ -30,6 +30,7 @@ $sqlDetail = "SELECT
 $resultDetail = mysqli_query($conn, $sqlDetail);
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">

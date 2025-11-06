@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 include "../Layout/sidebar.php";
+include '../Layout/footer.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

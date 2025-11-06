@@ -17,6 +17,7 @@ $query .= " ORDER BY username ASC";
 $result = $conn->query($query);
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 
 <!DOCTYPE html>

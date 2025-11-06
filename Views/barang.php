@@ -5,6 +5,7 @@ session_start();
 
 $query = mysqli_query($conn, "SELECT * FROM barang");
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 <!DOCTYPE html>
 <html>

@@ -76,6 +76,7 @@ switch ($periode) {
 }
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 $result = mysqli_query($conn, $sql);
 
 $data = [];

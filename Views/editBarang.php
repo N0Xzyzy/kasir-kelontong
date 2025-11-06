@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: barang.php");
     exit;
 }
-include "../Layout/sidebar.php"
+include "../Layout/sidebar.php";
+include '../Layout/footer.php';
 ?>
 <!DOCTYPE html>
 <html>

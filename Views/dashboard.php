@@ -11,6 +11,7 @@ $totalPengeluaran = mysqli_fetch_assoc($pengeluaran)['total'] ?? 0;
 $laba = $totalPemasukan - $totalPengeluaran;
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 
 <!DOCTYPE html>

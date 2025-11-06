@@ -45,6 +45,7 @@ if (isset($_POST['simpan_hutang'])) {
 }
 
 include '../Layout/sidebar.php';
+include '../Layout/footer.php';
 ?>
 
 <!DOCTYPE html>
