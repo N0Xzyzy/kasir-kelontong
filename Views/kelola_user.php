@@ -107,7 +107,7 @@ include '../Layout/footer.php';
                                 <?php } ?>
                             </tbody>
                         </table>
-                        <a class="p-1.5 bg-green-500 text-white text-xl font-semibold rounded-md tracking-wide" href="tambahUser.php">Tambah User</a>
+                        <a class="font-semibold text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" href="tambahUser.php">Tambah User</a>
                     </div>
             </div>
         </main>

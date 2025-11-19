@@ -3,7 +3,7 @@ require '../Config/koneksi.php';
 session_start();
 
 
-$query = mysqli_query($conn, "SELECT * FROM barang");
+$query = mysqli_query($conn, "SELECT * FROM kategori");
 include '../Layout/sidebar.php';
 include '../Layout/footer.php';
 ?>
@@ -11,7 +11,7 @@ include '../Layout/footer.php';
 <html>
 
 <head>
-    <title>Data Barang</title>
+    <title>Data Kategori</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,17 +33,15 @@ include '../Layout/footer.php';
         ?>
         <main class="p-6 pt-17 flex-1">
             <div class="bg-white rounded-lg shadow p-6">
-                <h1 class="font-bold text-xl">Data Barang</h1>
-                <button href="tambahBarang.php" type="button" class="font-semibold text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    <a href="tambahBarang.php">+ Tambah Barang</a></button>
+                <h1 class="font-bold text-xl">Data Kategori</h1>
+                <button onclick="tambahKategori.php" type="button" class="font-semibold text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    <a href="tambahKategori.php">+ Tambah Kategori</a></button>
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left">ID</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Nama Barang</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Kategori</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Stok</th>
-                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Harga</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Nama</th>
+                            <th class="p-3 text-sm font-semibold tracking-wide text-left">Deskripsi</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left">Status</th>
                             <th class="p-3 text-sm font-semibold tracking-wide text-left">Aksi</th>
                         </tr>
@@ -51,18 +49,16 @@ include '../Layout/footer.php';
                     <tbody>
                         <?php while ($row = mysqli_fetch_assoc($query)) : ?>
                             <tr class="odd:bg-white even:bg-gray-100">
-                                <td class="p-3 text-sm text-gray-700"><?= $row['id_barang'] ?></td>
-                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['nama_barang']) ?></td>
-                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['kategori']) ?></td>
-                                <td class="p-3 text-sm text-gray-700"><?= $row['stok'] ?></td>
-                                <td class="p-3 text-sm text-gray-700"><?= number_format($row['harga'], 2, ',', '.') ?></td>
+                                <td class="p-3 text-sm text-gray-700"><?= $row['id'] ?></td>
+                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['nama']) ?></td>
+                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['deskripsi']) ?></td>
                                 <td class="p-3 text-sm text-gray-700"><?= $row['status'] ?></td>
                                 <td class="p-3 text-sm text-gray-700">
                                     <?php if ($row['status'] === 'aktif') : ?>
-                                        <a class="cursor-pointer p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30" href="editBarang.php?id_barang=<?= $row['id_barang'] ?>">Edit</a>
-                                        <a class="cursor-pointer p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30" href="hapusBarang.php?id_barang=<?= $row['id_barang'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                                        <a class="cursor-pointer p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30" href="editKategori.php?id=<?= $row['id'] ?>">Edit</a>
+                                        <a class="cursor-pointer p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30" href="hapusKategori.php?id=<?= $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                                     <?php else : ?>
-                                        <a class="cursor-pointer p-1.5 tracking-wider bg-yellow-300 text-yellow-800 rounded-sm bg-opacity-30" href="editBarang.php?id_barang=<?= $row['id_barang'] ?>">Aktifkan</a>
+                                        <a class="cursor-pointer p-1.5 tracking-wider bg-yellow-300 text-yellow-800 rounded-sm bg-opacity-30" href="editKategori.php?id=<?= $row['id'] ?>">Aktifkan</a>
                                     <?php endif ?>
                                 </td>
                             </tr>

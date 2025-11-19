@@ -42,59 +42,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $check_stmt->close();
     }
 }
+
 include '../Layout/sidebar.php';
 include '../Layout/footer.php';
 ?>
+
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Tambah User</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+        body { font-family: 'Montserrat', sans-serif; }
     </style>
 </head>
 
-<body class="h-full flex bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex">
 
     <div class="flex flex-col flex-1">
+
         <?php include '../Layout/header.php'; ?>
-        <main class="p-6 pt-17 flex-1">
-            <div class="bg-white rounded-lg shadow p-6">
-                <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-                <?php if (isset($_GET['msg'])) echo "<p style='color:green;'>" . htmlspecialchars($_GET['msg']) . "</p>"; ?>
-                <div class="form-wrapper">
-                    <h2 class="font-bold text-2xl">Tambah User</h2>
-                    <form method="POST" action="">
-                        <div class="form-group">
-                            <label>Username:</label>
-                            <input type="text" name="username" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2">
-                        </div>
-                        <div class="form-group">
-                            <label>Password:</label>
-                            <input type="password" name="password" required class="w-full py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2">
-                        </div>
-                        <div class="form-group">
-                            <label>Role:</label>
-                            <select name="role" class="border rounded p-2">
-                                <option value="owner">Owner</option>
-                                <option value="operator">Operator</option>
-                                <option value="kasir">Kasir</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="cursor-pointer p-1.5 bg-green-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30 ">+ Tambah User</button>
-                        <a href="kelola_user.php" class="cursor-pointer p-1.5 bg-red-500 text-white rounded-sm font-bold tracking-wider bg-opacity-30 ">Kembali</a>
-                    </form>
+
+        <main class="p-6 pt-20">
+
+            <div class="bg-white border border-1 rounded-lg shadow relative m-10">
+
+                <!-- Header Card -->
+                <div class="flex items-start justify-between p-5 border-b rounded-t">
+                    <h3 class="text-xl font-semibold">Tambah User</h3>
+
+                    <a href="kelola_user.php" 
+                       class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
                 </div>
+
+                <!-- Body Card -->
+                <div class="p-6 space-y-6">
+
+                    <?php if (isset($error)): ?>
+                        <p class="text-red-500 font-semibold"><?= $error ?></p>
+                    <?php endif; ?>
+
+                    <?php if (isset($_GET['msg'])): ?>
+                        <p class="text-green-600 font-semibold"><?= htmlspecialchars($_GET['msg']) ?></p>
+                    <?php endif; ?>
+
+                    <form method="POST">
+                        <div class="grid grid-cols-6 gap-6">
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Username</label>
+                                <input type="text" name="username" 
+                                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+                                       focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" required>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Password</label>
+                                <input type="password" name="password" 
+                                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+                                       focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" required>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Role</label>
+                                <select name="role" 
+                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+                                        focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                                    <option value="owner">Owner</option>
+                                    <option value="operator">Operator</option>
+                                    <option value="kasir">Kasir</option>
+                                </select>
+                            </div>
+
+                        </div>
+                </div>
+
+                <!-- Footer Card -->
+                <div class="p-6 border-t border-gray-200 rounded-b flex gap-3">
+                    <button type="submit" 
+                        class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 
+                        font-medium rounded-lg text-sm px-5 py-2.5">
+                        Simpan User
+                    </button>
+
+                    <a href="kelola_user.php"
+                        class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-200 
+                        font-medium rounded-lg text-sm px-5 py-2.5">
+                        Kembali
+                    </a>
+                </div>
+
+                </form>
             </div>
+
         </main>
-
+    </div>
 </body>
-
 </html>

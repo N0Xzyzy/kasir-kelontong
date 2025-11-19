@@ -29,7 +29,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="bg-white lg:w-1/3 2xl:w-1/4 p-8 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-2 text-center">Selamat Datang!</h2>
             <h3 class="text-center text-gray-450">Silahkan login untuk melanjutkan</h3>
-            <div class="space-y-5 mt-3">
+            <div class="space-y-3 mt-3">
                 <form method="POST" action="Config/login.php" class="flex flex-col">
                     <input class="border px-5 py-2.5 border border-gray-300 rounded-md focus:outline-focus focus:ring-2 focus:ring-blue-300" type="text" name="username" placeholder="Username" required><br>
                     <input class="border px-5 py-2.5 border border-gray-300 rounded-md focus:outline-focus focus:ring-2 focus:ring-blue-300" type="password" name="password" placeholder="Password" required><br>

@@ -27,6 +27,11 @@
             <span>📁</span><span>Barang</span>
           </a>
           <?php } ?>
+          <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) {?>
+          <a href="../Views/kategori.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
+            <span>📁</span><span>Kategori</span>
+          </a>
+          <?php } ?>
           <a href="../Views/pengeluaran.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
             <span>📄</span><span>Pengeluaran</span>
           </a>

@@ -56,8 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 include "../Layout/sidebar.php";
 include '../Layout/footer.php';
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,48 +67,71 @@ include '../Layout/footer.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Montserrat', sans-serif; }
-    </style>
+    <style>body { font-family: 'Montserrat', sans-serif; }</style>
 </head>
 <body class="bg-gray-100 flex flex-1">
-    <div class="flex flex-col flex-1">
-        <?php include "../Layout/header.php"; ?>
-        <main class="flex-1 pt-17 p-6">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h1 class="text-2xl font-bold mb-3">Edit Hutang</h1>
-                <form method="POST" class="space-y-4">
-                    <div>
-                        <label class="block font-medium">Nama Pelanggan:</label>
-                        <input type="text" name="nama_pelanggan" value="<?= htmlspecialchars($hutang['nama_pelanggan']) ?>" required class="border rounded p-2 w-full">
+
+<div class="flex flex-col flex-1">
+    <?php include "../Layout/header.php"; ?>
+    <main class="flex-1 pt-17 p-6">
+        <div class="bg-white border border-1 rounded-lg shadow relative m-10">
+
+            <div class="flex items-start justify-between p-5 border-b rounded-t">
+                <h3 class="text-xl font-semibold">Edit Hutang Pelanggan</h3>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <form method="POST">
+                    <div class="grid grid-cols-6 gap-6">
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="nama_pelanggan" class="text-sm font-medium text-gray-900 block mb-2">Nama Pelanggan</label>
+                            <input type="text" name="nama_pelanggan" id="nama_pelanggan" value="<?= htmlspecialchars($hutang['nama_pelanggan']) ?>" required
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="jumlah_hutang" class="text-sm font-medium text-gray-900 block mb-2">Jumlah Hutang</label>
+                            <input type="number" name="jumlah_hutang" id="jumlah_hutang" value="<?= htmlspecialchars($hutang['jumlah_hutang']) ?>" required
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="tanggal_jatuh_tempo" class="text-sm font-medium text-gray-900 block mb-2">Tanggal Jatuh Tempo</label>
+                            <input type="date" name="tanggal_jatuh_tempo" id="tanggal_jatuh_tempo" value="<?= htmlspecialchars($hutang['tanggal_jatuh_tempo']) ?>" required
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="status" class="text-sm font-medium text-gray-900 block mb-2">Status</label>
+                            <select name="status" id="status" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                                <option value="belum" <?= $hutang['status'] == 'belum' ? 'selected' : '' ?>>Belum Lunas</option>
+                                <option value="lunas" <?= $hutang['status'] == 'lunas' ? 'selected' : '' ?>>Lunas</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="kontak" class="text-sm font-medium text-gray-900 block mb-2">Kontak</label>
+                            <input type="text" name="kontak" id="kontak" value="<?= htmlspecialchars($hutang['kontak']) ?>"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                        </div>
+
+                        <div class="col-span-full">
+                            <label for="catatan" class="text-sm font-medium text-gray-900 block mb-2">Catatan</label>
+                            <textarea name="catatan" id="catatan" rows="4"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"><?= htmlspecialchars($hutang['catatan']) ?></textarea>
+                        </div>
+
                     </div>
-                    <div>
-                        <label class="block font-medium">Jumlah Hutang:</label>
-                        <input type="number" name="jumlah_hutang" value="<?= htmlspecialchars($hutang['jumlah_hutang']) ?>" required class="border rounded p-2 w-full">
+                    <div class="mt-6 flex justify-end">
+                        <button type="submit" class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5">Update Hutang</button>
                     </div>
-                    <div>
-                        <label class="block font-medium">Tanggal Jatuh Tempo:</label>
-                        <input type="date" name="tanggal_jatuh_tempo" value="<?= htmlspecialchars($hutang['tanggal_jatuh_tempo']) ?>" required class="border rounded p-2 w-full">
-                    </div>
-                    <div>
-                        <label class="block font-medium">Status:</label>
-                        <select name="status" class="border rounded p-2 w-full">
-                            <option value="belum" <?= $hutang['status'] == 'belum' ? 'selected' : '' ?>>Belum Lunas</option>
-                            <option value="lunas" <?= $hutang['status'] == 'lunas' ? 'selected' : '' ?>>Lunas</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-medium">Kontak:</label>
-                        <input type="text" name="kontak" value="<?= htmlspecialchars($hutang['kontak']) ?>" class="border rounded p-2 w-full">
-                    </div>
-                    <div>
-                        <label class="block font-medium">Catatan:</label>
-                        <textarea name="catatan" class="border rounded p-2 w-full"><?= htmlspecialchars($hutang['catatan']) ?></textarea>
-                    </div>
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
                 </form>
             </div>
-        </main>
-    </div>
+
+        </div>
+    </main>
+</div>
+
 </body>
 </html>

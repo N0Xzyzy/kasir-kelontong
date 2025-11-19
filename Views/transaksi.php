@@ -20,14 +20,15 @@ $result_barang = $stmt_barang->get_result();
 if (isset($_POST['checkout'])) {
     $metode  = $_POST['metode_pembayaran'];
     $total   = $_POST['total_transaksi'];
-    $tanggal = date("Y-m-d"); 
+    $tanggal = date("Y-m-d");
     $waktu   = date("Y-m-d H:i:s");
 
     try {
         $conn->begin_transaction();
 
-        $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, id_user) 
-                  VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, bayar, kembalian, id_user) 
+          VALUES (?, ?, ?, ?, ?, ?)";
+
         $stmt = $conn->prepare($query);
         $stmt->bind_param("sdsi", $waktu, $total, $metode, $id_user);
         $stmt->execute();
@@ -36,13 +37,17 @@ if (isset($_POST['checkout'])) {
         foreach ($_POST['id_barang'] as $i => $id_barang) {
             $jumlah   = $_POST['jumlah'][$i];
             $harga    = $_POST['harga'][$i];
+            $bayar = $_POST['uang_bayar'];
+            $kembalian = $bayar - $total;
             $subtotal = $jumlah * $harga;
 
-            $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_barang, jumlah, harga_jual, subtotal) 
+            $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_barang, jumlah, harga, subtotal) 
                              VALUES (?, ?, ?, ?, ?)";
             $stmt_detail = $conn->prepare($query_detail);
             $stmt_detail->bind_param("iiidd", $id_transaksi, $id_barang, $jumlah, $harga, $subtotal);
             $stmt_detail->execute();
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("sdsddi", $waktu, $total, $metode, $bayar, $kembalian, $id_user);
         }
 
         if ($metode === "Tunai") {
@@ -63,7 +68,6 @@ if (isset($_POST['checkout'])) {
             header("Location: tambahHutang.php?id_transaksi=" . $id_transaksi);
         }
         exit();
-
     } catch (Exception $e) {
         $conn->rollback();
         die("Terjadi error: " . $e->getMessage());
@@ -107,6 +111,20 @@ include '../Layout/footer.php';
                         <input type="hidden" name="total_transaksi" id="total_transaksi" value="0">
                     </div>
 
+                    <div class="mt-4">
+                        <label class="block font-semibold">Uang Bayar</label>
+                        <input type="number" id="uang_bayar" name="uang_bayar"
+                            class="w-full p-2 border rounded"
+                            placeholder="Masukkan uang bayar" oninput="hitungKembalian()">
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="block font-semibold">Kembalian</label>
+                        <input type="text" id="kembalian" class="w-full p-2 border rounded bg-gray-100"
+                            readonly>
+                    </div>
+
+
                     <div class="mt-2">
                         <label class="block font-semibold">Metode Pembayaran</label>
                         <select name="metode_pembayaran" id="metode_pembayaran" class="w-full p-2 border rounded" onchange="toggleNamaPelanggan()">
@@ -137,10 +155,10 @@ include '../Layout/footer.php';
                         <div class="bg-white p-4 border rounded shadow flex flex-col justify-between">
                             <div>
                                 <h3 class="font-bold"><?= $row['nama_barang'] ?></h3>
-                                <p>Rp <?= number_format($row['harga_jual'], 0, ',', '.') ?></p>
+                                <p>Rp <?= number_format($row['harga'], 0, ',', '.') ?></p>
                                 <p class="text-sm text-gray-500">Stok: <?= $row['stok'] ?></p>
                             </div>
-                            <button type="button" onclick="addToCart(<?= $row['id_barang'] ?>, '<?= $row['nama_barang'] ?>', <?= $row['harga_jual'] ?>)" class="mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Tambah</button>
+                            <button type="button" onclick="addToCart(<?= $row['id_barang'] ?>, '<?= $row['nama_barang'] ?>', <?= $row['harga'] ?>)" class="mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Tambah</button>
                         </div>
                     <?php endwhile; ?>
                 </div>
@@ -258,6 +276,17 @@ include '../Layout/footer.php';
                 btnCheckout.innerText = "Bayar";
             }
         });
+
+        function hitungKembalian() {
+            let total = parseFloat(document.getElementById('total_transaksi').value);
+            let bayar = parseFloat(document.getElementById('uang_bayar').value);
+
+            if (!isNaN(total) && !isNaN(bayar)) {
+                let kembalian = bayar - total;
+                document.getElementById('kembalian').value =
+                    "Rp " + kembalian.toLocaleString();
+            }
+        }
     </script>
 
 </body>
