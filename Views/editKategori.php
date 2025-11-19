@@ -2,35 +2,26 @@
 require '../Config/koneksi.php';
 session_start();
 
-$id = $_GET['id_barang'];
-$result = mysqli_query($conn, "SELECT * FROM barang WHERE id_barang = $id");
-$barang = mysqli_fetch_assoc($result);
+$id = $_GET['id'];
+$result = mysqli_query($conn, "SELECT * FROM kategori WHERE id = $id");
+$nama = mysqli_fetch_assoc($result);
 
-if (!$barang) {
+if (!$nama) {
     die("Barang tidak ditemukan!");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama  = $_POST['nama_barang'];
-    $stok  = $_POST['stok'];
-    $harga = $_POST['harga'];
+    $nama  = $_POST['nama'];
+    $desc  = $_POST['deskripsi'];
     $status = $_POST['status'];
 
-    // Logika otomatis: stok habis = nonaktif, stok ada = aktif
-    if ($stok <= 0) {
-        $status = 'nonaktif';
-    } else {
-        $status = 'aktif';
-    }
-
-    mysqli_query($conn, "UPDATE barang SET 
-        nama_barang='$nama', 
-        stok='$stok', 
-        harga='$harga', 
+    mysqli_query($conn, "UPDATE kategori SET 
+        nama='$nama', 
+        deskripsi='$desc', 
         status='$status'
-        WHERE id_barang=$id");
+        WHERE id=$id");
 
-    header("Location: barang.php");
+    header("Location: kategori.php");
     exit;
 }
 
@@ -40,7 +31,7 @@ include "../Layout/sidebar.php";
 <html>
 
 <head>
-    <title>Edit Barang</title>
+    <title>Edit Kategori</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,7 +52,7 @@ include "../Layout/sidebar.php";
             <div class="bg-white border border-1 rounded-lg shadow relative m-10">
 
                 <div class="flex items-start justify-between p-5 border-b rounded-t">
-                    <h3 class="text-xl font-semibold">Edit Barang</h3>
+                    <h3 class="text-xl font-semibold">Edit Kategori</h3>
                 </div>
 
                 <div class="p-6 space-y-6">
@@ -70,21 +61,10 @@ include "../Layout/sidebar.php";
 
                             <!-- Nama Barang -->
                             <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Nama Barang</label>
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Nama Kategori</label>
                                 <input type="text" 
-                                    name="nama_barang" 
-                                    value="<?= htmlspecialchars($barang['nama_barang']) ?>"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
-                                           focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                    required>
-                            </div>
-
-                            <!-- Stok -->
-                            <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Stok</label>
-                                <input type="number" 
-                                    name="stok" 
-                                    value="<?= $barang['stok'] ?>"
+                                    name="nama_" 
+                                    value="<?= htmlspecialchars($nama['nama']) ?>"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                     required>
@@ -92,11 +72,11 @@ include "../Layout/sidebar.php";
 
                             <!-- Harga -->
                             <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Harga</label>
-                                <input type="number" 
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Deskripsi</label>
+                                <input type="text" 
                                     name="harga" 
                                     step="0.01"
-                                    value="<?= $barang['harga'] ?>"
+                                    value="<?= $nama['deskripsi'] ?>"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                     required>
@@ -108,8 +88,8 @@ include "../Layout/sidebar.php";
                                 <select name="status"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                                    <option value="aktif" <?= $barang['status'] == 'aktif' ? 'selected' : '' ?>>Aktif</option>
-                                    <option value="nonaktif" <?= $barang['status'] == 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
+                                    <option value="aktif" <?= $nama['status'] == 'aktif' ? 'selected' : '' ?>>Aktif</option>
+                                    <option value="nonaktif" <?= $nama['status'] == 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
                                 </select>
                             </div>
 

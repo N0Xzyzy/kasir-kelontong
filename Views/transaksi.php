@@ -23,22 +23,26 @@ if (isset($_POST['checkout'])) {
     $tanggal = date("Y-m-d");
     $waktu   = date("Y-m-d H:i:s");
 
+    // Ambil uang bayar jika tunai
+    $bayar = isset($_POST['uang_bayar']) ? floatval($_POST['uang_bayar']) : 0;
+    $kembalian = $bayar - $total;
+
     try {
         $conn->begin_transaction();
 
+        // INSERT TRANSAKSI
         $query = "INSERT INTO transaksi (tanggal, total_transaksi, metode_pembayaran, bayar, kembalian, id_user) 
-          VALUES (?, ?, ?, ?, ?, ?)";
+                  VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sdsi", $waktu, $total, $metode, $id_user);
+        $stmt->bind_param("sdsddi", $waktu, $total, $metode, $bayar, $kembalian, $id_user);
         $stmt->execute();
         $id_transaksi = $stmt->insert_id;
 
+        // INPUT DETAIL TRANSAKSI
         foreach ($_POST['id_barang'] as $i => $id_barang) {
             $jumlah   = $_POST['jumlah'][$i];
             $harga    = $_POST['harga'][$i];
-            $bayar = $_POST['uang_bayar'];
-            $kembalian = $bayar - $total;
             $subtotal = $jumlah * $harga;
 
             $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_barang, jumlah, harga, subtotal) 
@@ -46,13 +50,12 @@ if (isset($_POST['checkout'])) {
             $stmt_detail = $conn->prepare($query_detail);
             $stmt_detail->bind_param("iiidd", $id_transaksi, $id_barang, $jumlah, $harga, $subtotal);
             $stmt_detail->execute();
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("sdsddi", $waktu, $total, $metode, $bayar, $kembalian, $id_user);
         }
 
+        // JIKA TUNAI → MASUK KE PEMASUKAN
         if ($metode === "Tunai") {
-            $sql_pemasukan = "INSERT INTO pemasukan (id_transaksi, jumlah, tanggal, sumber) 
-                            VALUES (?, ?, ?, ?)";
+            $sql_pemasukan = "INSERT INTO pemasukan (id_sumber, jumlah, tanggal, sumber) 
+                      VALUES (?, ?, ?, ?)";
             $stmt_pemasukan = $conn->prepare($sql_pemasukan);
             $sumber = "transaksi";
             $stmt_pemasukan->bind_param("idss", $id_transaksi, $total, $tanggal, $sumber);
@@ -77,6 +80,7 @@ if (isset($_POST['checkout'])) {
 include '../Layout/sidebar.php';
 include '../Layout/footer.php';
 ?>
+
 
 
 
