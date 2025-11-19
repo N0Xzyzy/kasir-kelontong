@@ -82,10 +82,10 @@ include '../Layout/footer.php';
                             <tr class="border-b">
                                 <td class="p-2"><?= $row['nama_barang'] ?></td>
                                 <td class="p-2"><?= $row['jumlah'] ?></td>
-                                <td class="p-2">Rp<?= number_format($row['harga'], 0, ',', '.') ?></td>
-                                <td class="p-2 text-right">Rp<?= number_format($row['subtotal'], 0, ',', '.') ?></td>
-                                <td class="p-2">Rp<?= number_format($row['bayar'], 0, ',', '.') ?></td>
-                                <td class="p-2">Rp<?= number_format($row['kembalian'], 0, ',', '.') ?></td>
+                                <td class="p-2">Rp<?= number_format($row['harga']?? 0, 0, ',', '.') ?></td>
+                                <td class="p-2 text-right">Rp<?= number_format($row['subtotal']?? 0, 0, ',', '.') ?></td>
+                                <td class="p-2">Rp<?= number_format($row['bayar']?? 0, 0, ',', '.') ?></td>
+                                <td class="p-2">Rp<?= number_format($row['kembalian']?? 0, 0, ',', '.') ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>

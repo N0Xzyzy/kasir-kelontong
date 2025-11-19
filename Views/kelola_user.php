@@ -97,8 +97,10 @@ include '../Layout/footer.php';
                                         <td class="p-3 text-sm text-gray-700"><?php echo $row['role']; ?></td>
                                         <td class="p-3 text-sm text-gray-700">
                                             <?php if ($row['username'] != $_SESSION['username']) { ?>
-                                                <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer" href="hapusUser.php?id_user=<?php echo $row['id_user']; ?>"
-                                                    onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                                                <a class="p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30 cursor-pointer font-semibold" href="editUser.php?id_user=<?php echo $row['id_user']; ?>">Edit</a>
+                                                    |
+                                                <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer font-semibold" href="hapusUser.php?id_user=<?php echo $row['id_user']; ?>"
+                                                onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
                                             <?php } else { ?>
                                                 <span style="color:gray;">Tidak bisa dihapus</span>
                                             <?php } ?>

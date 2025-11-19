@@ -3,7 +3,9 @@ require '../Config/koneksi.php';
 session_start();
 
 
-$query = mysqli_query($conn, "SELECT * FROM barang");
+$query = mysqli_query($conn, "SELECT barang.*, kategori.nama AS nama
+    FROM barang
+    LEFT JOIN kategori ON barang.kategori = kategori.id");
 include '../Layout/sidebar.php';
 include '../Layout/footer.php';
 ?>
@@ -53,7 +55,7 @@ include '../Layout/footer.php';
                             <tr class="odd:bg-white even:bg-gray-100">
                                 <td class="p-3 text-sm text-gray-700"><?= $row['id_barang'] ?></td>
                                 <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['nama_barang']) ?></td>
-                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['kategori']) ?></td>
+                                <td class="p-3 text-sm text-gray-700"><?= htmlspecialchars($row['nama']) ?></td>
                                 <td class="p-3 text-sm text-gray-700"><?= $row['stok'] ?></td>
                                 <td class="p-3 text-sm text-gray-700"><?= number_format($row['harga'], 2, ',', '.') ?></td>
                                 <td class="p-3 text-sm text-gray-700"><?= $row['status'] ?></td>

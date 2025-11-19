@@ -2,24 +2,24 @@
 require '../Config/koneksi.php';
 session_start();
 
-$id = $_GET['id'];
-$result = mysqli_query($conn, "SELECT * FROM kategori WHERE id = $id");
-$nama = mysqli_fetch_assoc($result);
+$id_user = $_GET['id_user'];
+$result = mysqli_query($conn, "SELECT * FROM users WHERE id_user = $id_user");
+$row = mysqli_fetch_assoc($result);
 
-if (!$nama) {
+if (!$row) {
     die("Barang tidak ditemukan!");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama  = $_POST['nama'];
-    $desc  = $_POST['deskripsi'];
-    $status = $_POST['status'];
+    $username  = $_POST['username'];
+    $password  = $_POST['password'];
+    $role = $_POST['role'];
 
-    mysqli_query($conn, "UPDATE kategori SET 
+    mysqli_query($conn, "UPDATE users SET 
         nama='$nama', 
-        deskripsi='$desc', 
-        status='$status'
-        WHERE id=$id");
+        password='$password', 
+        role='$role'
+        WHERE id_user=$id_user");
 
     header("Location: kategori.php");
     exit;
@@ -31,7 +31,7 @@ include "../Layout/sidebar.php";
 <html>
 
 <head>
-    <title>Edit Kategori</title>
+    <title>Edit User</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,44 +52,41 @@ include "../Layout/sidebar.php";
             <div class="bg-white border border-1 rounded-lg shadow relative m-10">
 
                 <div class="flex items-start justify-between p-5 border-b rounded-t">
-                    <h3 class="text-xl font-semibold">Edit Kategori</h3>
+                    <h3 class="text-xl font-semibold">Edit User</h3>
                 </div>
 
                 <div class="p-6 space-y-6">
                     <form method="POST">
                         <div class="grid grid-cols-6 gap-6">
-
-                            <!-- Nama Barang -->
                             <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Nama Kategori</label>
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Username</label>
                                 <input type="text" 
-                                    name="nama" 
-                                    value="<?= htmlspecialchars($nama['nama']) ?>"
+                                    name="username" 
+                                    value="<?= htmlspecialchars($row['username']) ?>"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                     required>
                             </div>
-
-                            <!-- Desc -->
                             <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Deskripsi</label>
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Password</label>
                                 <input type="text" 
-                                    name="deskripsi" 
+                                    name="password" 
                                     step="0.01"
-                                    value="<?= $nama['deskripsi'] ?>"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                    required>
+                                    required
+                                    placeholder="Kosongkan jika tidak ingin dirubah">
                             </div>
 
                             <!-- Status -->
                             <div class="col-span-6 sm:col-span-3">
-                                <label class="text-sm font-medium text-gray-900 block mb-2">Status</label>
+                                <label class="text-sm font-medium text-gray-900 block mb-2">Rolw</label>
                                 <select name="status"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                                            focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                                    <option value="aktif" <?= $nama['status'] == 'aktif' ? 'selected' : '' ?>>Aktif</option>
-                                    <option value="nonaktif" <?= $nama['status'] == 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
+                                    <option value="aktif" <?= $row['role'] == 'owner' ? 'selected' : '' ?>>Owner</option>
+                                    <option value="nonaktif" <?= $row['role'] == 'operator' ? 'selected' : '' ?>>Operator</option>
+                                    <option value="nonaktif" <?= $row['role'] == 'kasir' ? 'selected' : '' ?>>Kasir</option>
                                 </select>
                             </div>
 
