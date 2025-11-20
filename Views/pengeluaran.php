@@ -42,7 +42,7 @@ include '../Layout/footer.php';
       unset($_SESSION['msg']);
     }
     ?>
-    <main class="p-6 pt-17 flex-1">
+    <main class="p-6 pt-24 pl-32 flex-1">
       <div class="bg-white rounded-lg shadow p-6">
         <h1 class="font-bold text-xl">Pengeluaran</h1>
         <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700">

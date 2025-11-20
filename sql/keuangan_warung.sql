@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Aug 27, 2025 at 03:20 PM
--- Server version: 8.0.30
--- PHP Version: 8.3.12
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 20 Nov 2025 pada 04.47
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,44 +24,44 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `barang`
+-- Struktur dari tabel `barang`
 --
 
 CREATE TABLE `barang` (
-  `id_barang` int NOT NULL,
+  `id_barang` int(11) NOT NULL,
   `nama_barang` varchar(100) NOT NULL,
-  `stok` int NOT NULL,
-  `harga_beli` decimal(12,2) NOT NULL,
-  `harga_jual` decimal(12,2) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `kategori` int(100) DEFAULT NULL,
+  `harga` decimal(12,2) NOT NULL,
   `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `barang`
+-- Dumping data untuk tabel `barang`
 --
 
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `harga_beli`, `harga_jual`, `status`) VALUES
-(2, 'Gula 1kg', 959, 2000.00, 10000.00, 'nonaktif'),
-(3, 'sego goreng', 12, 1000.00, 3000.00, 'aktif'),
-(4, 'mi goreang', 122, 1.00, 4000.00, 'aktif');
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `kategori`, `harga`, `status`) VALUES
+(2, 'Gula 1kg', 959, NULL, 10000.00, 'nonaktif'),
+(3, 'sego goreng', 12, NULL, 3000.00, 'aktif'),
+(4, 'mi goreang', 122, NULL, 4000.00, 'aktif');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_transaksi`
+-- Struktur dari tabel `detail_transaksi`
 --
 
 CREATE TABLE `detail_transaksi` (
-  `id_detail` int NOT NULL,
-  `id_transaksi` int NOT NULL,
-  `id_barang` int NOT NULL,
-  `jumlah` int NOT NULL,
+  `id_detail` int(11) NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
   `harga_jual` decimal(12,2) NOT NULL,
   `subtotal` decimal(12,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `detail_transaksi`
+-- Dumping data untuk tabel `detail_transaksi`
 --
 
 INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `jumlah`, `harga_jual`, `subtotal`) VALUES
@@ -87,22 +87,22 @@ INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `jumla
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hutang_pelanggan`
+-- Struktur dari tabel `hutang_pelanggan`
 --
 
 CREATE TABLE `hutang_pelanggan` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `nama_pelanggan` varchar(100) NOT NULL,
-  `id_transaksi` int NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
   `jumlah_hutang` decimal(12,2) NOT NULL,
   `tanggal_jatuh_tempo` date DEFAULT NULL,
   `status` enum('lunas','belum') DEFAULT 'belum',
   `kontak` varchar(50) DEFAULT NULL,
-  `catatan` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `catatan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `hutang_pelanggan`
+-- Dumping data untuk tabel `hutang_pelanggan`
 --
 
 INSERT INTO `hutang_pelanggan` (`id`, `nama_pelanggan`, `id_transaksi`, `jumlah_hutang`, `tanggal_jatuh_tempo`, `status`, `kontak`, `catatan`) VALUES
@@ -111,35 +111,48 @@ INSERT INTO `hutang_pelanggan` (`id`, `nama_pelanggan`, `id_transaksi`, `jumlah_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `laporan_keuangan`
+-- Struktur dari tabel `kategori`
 --
 
-CREATE TABLE `laporan_keuangan` (
-  `id_laporan` int NOT NULL,
-  `tanggal` date NOT NULL,
-  `total_pemasukan` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `total_pengeluaran` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `laba` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `jumlah_transaksi` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `kategori` (
+  `id` int(100) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `status` enum('aktif','nonaktif') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pemasukan`
+-- Struktur dari tabel `laporan_keuangan`
+--
+
+CREATE TABLE `laporan_keuangan` (
+  `id_laporan` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `total_pemasukan` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `total_pengeluaran` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `laba` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `jumlah_transaksi` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pemasukan`
 --
 
 CREATE TABLE `pemasukan` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `jumlah` decimal(12,2) NOT NULL,
   `sumber` enum('transaksi','pelunasan_hutang','lainnya') NOT NULL,
-  `id_sumber` int DEFAULT NULL,
-  `id_laporan` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_sumber` int(11) DEFAULT NULL,
+  `id_laporan` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pemasukan`
+-- Dumping data untuk tabel `pemasukan`
 --
 
 INSERT INTO `pemasukan` (`id`, `tanggal`, `jumlah`, `sumber`, `id_sumber`, `id_laporan`) VALUES
@@ -150,36 +163,36 @@ INSERT INTO `pemasukan` (`id`, `tanggal`, `jumlah`, `sumber`, `id_sumber`, `id_l
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengeluaran`
+-- Struktur dari tabel `pengeluaran`
 --
 
 CREATE TABLE `pengeluaran` (
-  `id_pengeluaran` int NOT NULL,
+  `id_pengeluaran` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `kategori` enum('Belanja','Operasional','Lain-lain') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `kategori` enum('Belanja','Operasional','Lain-lain') NOT NULL,
   `keperluan` varchar(255) NOT NULL,
-  `jumlah` int DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
   `total` decimal(12,2) NOT NULL,
   `supplier` varchar(100) DEFAULT NULL,
-  `id_laporan` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_laporan` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `transaksi`
 --
 
 CREATE TABLE `transaksi` (
-  `id_transaksi` int NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `total_transaksi` decimal(12,2) NOT NULL,
   `metode_pembayaran` enum('Tunai','Hutang') NOT NULL,
-  `id_user` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `transaksi`
+-- Dumping data untuk tabel `transaksi`
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total_transaksi`, `metode_pembayaran`, `id_user`) VALUES
@@ -200,35 +213,37 @@ INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total_transaksi`, `metode_p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
-  `id_user` int NOT NULL,
+  `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('owner','operator','kasir') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
-(2, 'Owner', '5be057accb25758101fa5eadbbd79503', 'owner');
+(2, 'Owner', '5be057accb25758101fa5eadbbd79503', 'owner'),
+(31, 'owner3', '202cb962ac59075b964b07152d234b70', 'owner');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `barang`
+-- Indeks untuk tabel `barang`
 --
 ALTER TABLE `barang`
-  ADD PRIMARY KEY (`id_barang`);
+  ADD PRIMARY KEY (`id_barang`),
+  ADD KEY `fk_kategori` (`kategori`);
 
 --
--- Indexes for table `detail_transaksi`
+-- Indeks untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
   ADD PRIMARY KEY (`id_detail`),
@@ -236,14 +251,20 @@ ALTER TABLE `detail_transaksi`
   ADD KEY `id_barang` (`id_barang`);
 
 --
--- Indexes for table `hutang_pelanggan`
+-- Indeks untuk tabel `hutang_pelanggan`
 --
 ALTER TABLE `hutang_pelanggan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_transaksi` (`id_transaksi`);
 
 --
--- Indexes for table `laporan_keuangan`
+-- Indeks untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `laporan_keuangan`
 --
 ALTER TABLE `laporan_keuangan`
   ADD PRIMARY KEY (`id_laporan`),
@@ -251,7 +272,7 @@ ALTER TABLE `laporan_keuangan`
   ADD UNIQUE KEY `unique_tanggal` (`tanggal`);
 
 --
--- Indexes for table `pemasukan`
+-- Indeks untuk tabel `pemasukan`
 --
 ALTER TABLE `pemasukan`
   ADD PRIMARY KEY (`id`),
@@ -259,7 +280,7 @@ ALTER TABLE `pemasukan`
   ADD KEY `fk_pemasukan_laporan` (`id_laporan`);
 
 --
--- Indexes for table `pengeluaran`
+-- Indeks untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`),
@@ -267,103 +288,115 @@ ALTER TABLE `pengeluaran`
   ADD KEY `fk_pengeluaran_laporan2` (`id_laporan`);
 
 --
--- Indexes for table `transaksi`
+-- Indeks untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `barang`
+-- AUTO_INCREMENT untuk tabel `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id_barang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `detail_transaksi`
+-- AUTO_INCREMENT untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `hutang_pelanggan`
+-- AUTO_INCREMENT untuk tabel `hutang_pelanggan`
 --
 ALTER TABLE `hutang_pelanggan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `laporan_keuangan`
+-- AUTO_INCREMENT untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `laporan_keuangan`
 --
 ALTER TABLE `laporan_keuangan`
-  MODIFY `id_laporan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_laporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `pemasukan`
+-- AUTO_INCREMENT untuk tabel `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `pengeluaran`
+-- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `transaksi`
+-- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `detail_transaksi`
+-- Ketidakleluasaan untuk tabel `barang`
+--
+ALTER TABLE `barang`
+  ADD CONSTRAINT `fk_kategori` FOREIGN KEY (`kategori`) REFERENCES `kategori` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
   ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE,
   ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
 
 --
--- Constraints for table `hutang_pelanggan`
+-- Ketidakleluasaan untuk tabel `hutang_pelanggan`
 --
 ALTER TABLE `hutang_pelanggan`
   ADD CONSTRAINT `hutang_pelanggan_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`);
 
 --
--- Constraints for table `pemasukan`
+-- Ketidakleluasaan untuk tabel `pemasukan`
 --
 ALTER TABLE `pemasukan`
   ADD CONSTRAINT `fk_pemasukan_laporan` FOREIGN KEY (`id_laporan`) REFERENCES `laporan_keuangan` (`id_laporan`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_pemasukan_transaksi` FOREIGN KEY (`id_sumber`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `pengeluaran`
+-- Ketidakleluasaan untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
   ADD CONSTRAINT `fk_pengeluaran_laporan2` FOREIGN KEY (`id_laporan`) REFERENCES `laporan_keuangan` (`id_laporan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `transaksi`
+-- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);

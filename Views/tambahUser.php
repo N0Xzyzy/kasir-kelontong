@@ -64,7 +64,7 @@ include '../Layout/footer.php';
 
         <?php include '../Layout/header.php'; ?>
 
-        <main class="p-6 pt-20">
+        <main class="p-6 pt-24 pl-32 flex-1">
 
             <div class="bg-white border border-1 rounded-lg shadow relative m-10">
 

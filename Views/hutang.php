@@ -26,7 +26,7 @@ include '../Layout/sidebar.php';
 <body class="flex bg-gray-100 h-full">
     <div class="flex flex-col flex-1">
         <?php include '../Layout/header.php'; ?>
-        <main class="p-6 pt-17 flex-1">
+        <main class="p-6 pt-24 pl-32 flex-1">
             <div class="bg-white rounded-lg shadow p-6">
                 <h1 class="font-bold text-xl">Hutang Pelanggan</h1>
                 <table class="w-full">

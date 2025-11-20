@@ -49,7 +49,7 @@ include '../Layout/footer.php';
             unset($_SESSION['msg']);
         }
         ?>
-        <main class="p-6 pt-17 flex-1">
+        <main class="p-6 pt-24 pl-32 flex-1">
             <div class="bg-white rounded-lg shadow p-6">
                 <h1 class="text-2xl font-bold">Data User</h2>
 

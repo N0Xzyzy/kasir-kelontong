@@ -46,7 +46,7 @@ include "../Layout/sidebar.php";
 <div class="flex flex-col flex-1">
     <?php include "../Layout/header.php"; ?>
 
-    <main class="flex-1 pt-17 p-6">
+    <main class="p-6 pt-24 pl-32 flex-1">
 
         <div class="bg-white border rounded-lg shadow m-10">
 

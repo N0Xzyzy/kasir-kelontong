@@ -1,57 +1,79 @@
+<?php $current = basename($_SERVER['PHP_SELF']); ?>
 
 <div class="border border-r border-gray-100 flex h-full w-45">
-    
 
-    <aside class="w-45 bg-white border border-r w-45 border-gray-100 p-4 flex flex-col justify-between h-full fixed">
-      <div>
+    <aside class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-100 p-4 z-30">
+        <div>
 
-        <div class="mb-7 flex items-center space-x-2">
-          <div class="w-6 h-6 bg-indigo-500 rounded-full"></div>
-          <span class="font-semibold">
-            Warung Kelontong
-          </span>
+            <div class="mb-7 flex items-center space-x-2">
+                <div class="w-6 h-6 bg-indigo-500 rounded-full"></div>
+                <span class="font-semibold">Warung Kelontong</span>
+            </div>
+
+            <nav class="space-y-1.5 text-2md font-semibold leading-7">
+
+                <a href="../Views/dashboard.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'dashboard.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg width="25px" height="25px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12.5 11.75C12.9142 11.75 13.25 11.4142 13.25 11C13.25 10.5858 12.9142 10.25 12.5 10.25V11.75ZM5.5 10.25C5.08579 10.25 4.75 10.5858 4.75 11C4.75 11.4142 5.08579 11.75 5.5 11.75V10.25ZM12.5 10.25C12.0858 10.25 11.75 10.5858 11.75 11C11.75 11.4142 12.0858 11.75 12.5 11.75V10.25ZM19.5 11.75C19.9142 11.75 20.25 11.4142 20.25 11C20.25 10.5858 19.9142 10.25 19.5 10.25V11.75ZM11.75 11C11.75 11.4142 12.0858 11.75 12.5 11.75C12.9142 11.75 13.25 11.4142 13.25 11H11.75ZM13.25 5C13.25 4.58579 12.9142 4.25 12.5 4.25C12.0858 4.25 11.75 4.58579 11.75 5H13.25ZM6.25 11C6.25 10.5858 5.91421 10.25 5.5 10.25C5.08579 10.25 4.75 10.5858 4.75 11H6.25ZM20.25 11C20.25 10.5858 19.9142 10.25 19.5 10.25C19.0858 10.25 18.75 10.5858 18.75 11H20.25ZM4.75 11C4.75 11.4142 5.08579 11.75 5.5 11.75C5.91421 11.75 6.25 11.4142 6.25 11H4.75ZM12.5 5.75C12.9142 5.75 13.25 5.41421 13.25 5C13.25 4.58579 12.9142 4.25 12.5 4.25V5.75ZM18.75 11C18.75 11.4142 19.0858 11.75 19.5 11.75C19.9142 11.75 20.25 11.4142 20.25 11H18.75ZM12.5 4.25C12.0858 4.25 11.75 4.58579 11.75 5C11.75 5.41421 12.0858 5.75 12.5 5.75V4.25ZM12.5 10.25H5.5V11.75H12.5V10.25ZM12.5 11.75H19.5V10.25H12.5V11.75ZM13.25 11V5H11.75V11H13.25ZM4.75 11V15H6.25V11H4.75ZM4.75 15C4.75 17.6234 6.87665 19.75 9.5 19.75V18.25C7.70507 18.25 6.25 16.7949 6.25 15H4.75ZM9.5 19.75H15.5V18.25H9.5V19.75ZM15.5 19.75C18.1234 19.75 20.25 17.6234 20.25 15H18.75C18.75 16.7949 17.2949 18.25 15.5 18.25V19.75ZM20.25 15V11H18.75V15H20.25ZM6.25 11V9H4.75V11H6.25ZM6.25 9C6.25 7.20507 7.70507 5.75 9.5 5.75V4.25C6.87665 4.25 4.75 6.37665 4.75 9H6.25ZM9.5 5.75H12.5V4.25H9.5V5.75ZM20.25 11V9H18.75V11H20.25ZM20.25 9C20.25 6.37665 18.1234 4.25 15.5 4.25V5.75C17.2949 5.75 18.75 7.20507 18.75 9H20.25ZM15.5 4.25H12.5V5.75H15.5V4.25Z" fill="#000000"></path> </g></svg></span><span>Dashboard</span>
+                </a>
+
+                <a href="../Views/transaksi.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'transaksi.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.0020048,13 C17.5542895,13 18.0020048,13.4477153 18.0020048,14 C18.0020048,14.5128358 17.6159646,14.9355072 17.1186259,14.9932723 L17.0020048,15 L5.41700475,15 L8.70911154,18.2928932 C9.0695955,18.6533772 9.09732503,19.2206082 8.79230014,19.6128994 L8.70911154,19.7071068 C8.34862757,20.0675907 7.78139652,20.0953203 7.38910531,19.7902954 L7.29489797,19.7071068 L2.29489797,14.7071068 C1.69232289,14.1045317 2.07433707,13.0928192 2.88837381,13.0059833 L3.00200475,13 L17.0020048,13 Z M16.6128994,4.20970461 L16.7071068,4.29289322 L21.7071068,9.29289322 C22.3096819,9.8954683 21.9276677,10.9071808 21.1136309,10.9940167 L21,11 L7,11 C6.44771525,11 6,10.5522847 6,10 C6,9.48716416 6.38604019,9.06449284 6.88337887,9.00672773 L7,9 L18.585,9 L15.2928932,5.70710678 C14.9324093,5.34662282 14.9046797,4.77939176 15.2097046,4.38710056 L15.2928932,4.29289322 C15.6533772,3.93240926 16.2206082,3.90467972 16.6128994,4.20970461 Z"></path> </g></svg></span><span>Transaksi</span>
+                </a>
+
+                <a href="../Views/hutang.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'hutang.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21H21M3 18H21M5.82333 3.00037C6.2383 3.36683 6.5 3.90285 6.5 4.5C6.5 5.60457 5.60457 6.5 4.5 6.5C3.90285 6.5 3.36683 6.2383 3.00037 5.82333M5.82333 3.00037C5.94144 3 6.06676 3 6.2 3H17.8C17.9332 3 18.0586 3 18.1767 3.00037M5.82333 3.00037C4.94852 3.00308 4.46895 3.02593 4.09202 3.21799C3.71569 3.40973 3.40973 3.71569 3.21799 4.09202C3.02593 4.46895 3.00308 4.94852 3.00037 5.82333M3.00037 5.82333C3 5.94144 3 6.06676 3 6.2V11.8C3 11.9332 3 12.0586 3.00037 12.1767M3.00037 12.1767C3.36683 11.7617 3.90285 11.5 4.5 11.5C5.60457 11.5 6.5 12.3954 6.5 13.5C6.5 14.0971 6.2383 14.6332 5.82333 14.9996M3.00037 12.1767C3.00308 13.0515 3.02593 13.531 3.21799 13.908C3.40973 14.2843 3.71569 14.5903 4.09202 14.782C4.46895 14.9741 4.94852 14.9969 5.82333 14.9996M5.82333 14.9996C5.94144 15 6.06676 15 6.2 15H17.8C17.9332 15 18.0586 15 18.1767 14.9996M21 12.1771C20.6335 11.7619 20.0973 11.5 19.5 11.5C18.3954 11.5 17.5 12.3954 17.5 13.5C17.5 14.0971 17.7617 14.6332 18.1767 14.9996M21 12.1771C21.0004 12.0589 21 11.9334 21 11.8V6.2C21 6.06676 21 5.94144 20.9996 5.82333M21 12.1771C20.9973 13.0516 20.974 13.5311 20.782 13.908C20.5903 14.2843 20.2843 14.5903 19.908 14.782C19.5311 14.9741 19.0515 14.9969 18.1767 14.9996M20.9996 5.82333C20.6332 6.2383 20.0971 6.5 19.5 6.5C18.3954 6.5 17.5 5.60457 17.5 4.5C17.5 3.90285 17.7617 3.36683 18.1767 3.00037M20.9996 5.82333C20.9969 4.94852 20.9741 4.46895 20.782 4.09202C20.5903 3.71569 20.2843 3.40973 19.908 3.21799C19.5311 3.02593 19.0515 3.00308 18.1767 3.00037M14 9C14 10.1046 13.1046 11 12 11C10.8954 11 10 10.1046 10 9C10 7.89543 10.8954 7 12 7C13.1046 7 14 7.89543 14 9Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></span><span>Hutang</span>
+                </a>
+
+                <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) { ?>
+                <a href="../Views/barang.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'barang.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg width="25px" height="25px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 3.32001H16C14.8954 3.32001 14 4.21544 14 5.32001V8.32001C14 9.42458 14.8954 10.32 16 10.32H19C20.1046 10.32 21 9.42458 21 8.32001V5.32001C21 4.21544 20.1046 3.32001 19 3.32001Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8 3.32001H5C3.89543 3.32001 3 4.21544 3 5.32001V8.32001C3 9.42458 3.89543 10.32 5 10.32H8C9.10457 10.32 10 9.42458 10 8.32001V5.32001C10 4.21544 9.10457 3.32001 8 3.32001Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M19 14.32H16C14.8954 14.32 14 15.2154 14 16.32V19.32C14 20.4246 14.8954 21.32 16 21.32H19C20.1046 21.32 21 20.4246 21 19.32V16.32C21 15.2154 20.1046 14.32 19 14.32Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8 14.32H5C3.89543 14.32 3 15.2154 3 16.32V19.32C3 20.4246 3.89543 21.32 5 21.32H8C9.10457 21.32 10 20.4246 10 19.32V16.32C10 15.2154 9.10457 14.32 8 14.32Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></span><span>Barang</span>
+                </a>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) { ?>
+                <a href="../Views/kategori.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'kategori.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg fill="#000000" width="25px" height="25px" viewBox="-7.5 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>category</title> <path d="M2.594 4.781l-1.719 1.75h15.5l-1.719-1.75h-12.063zM17.219 13.406h-17.219v-6.031h17.219v6.031zM12.063 11.688v-1.719h-6.875v1.719h0.844v-0.875h5.156v0.875h0.875zM17.219 20.313h-17.219v-6.031h17.219v6.031zM12.063 18.594v-1.75h-6.875v1.75h0.844v-0.875h5.156v0.875h0.875zM17.219 27.188h-17.219v-6h17.219v6zM12.063 25.469v-1.719h-6.875v1.719h0.844v-0.875h5.156v0.875h0.875z"></path> </g></svg></span><span>Kategori</span>
+                </a>
+                <?php } ?>
+
+                <a href="../Views/pengeluaran.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'pengeluaran.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg fill="#000000" height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 463 463" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M191.5,47c1.97,0,3.91-0.8,5.3-2.2c1.4-1.39,2.2-3.33,2.2-5.3c0-1.97-0.8-3.91-2.2-5.3c-1.39-1.4-3.33-2.2-5.3-2.2 c-1.97,0-3.91,0.8-5.3,2.2c-1.4,1.39-2.2,3.32-2.2,5.3c0,1.97,0.8,3.91,2.2,5.3C187.59,46.2,189.53,47,191.5,47z"></path> <path d="M159.5,143h104c4.142,0,7.5-3.358,7.5-7.5s-3.358-7.5-7.5-7.5h-104c-4.142,0-7.5,3.358-7.5,7.5S155.358,143,159.5,143z"></path> <path d="M263.5,208h-16c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h16c4.142,0,7.5-3.358,7.5-7.5S267.642,208,263.5,208z"></path> <path d="M159.5,223h56c4.142,0,7.5-3.358,7.5-7.5s-3.358-7.5-7.5-7.5h-56c-4.142,0-7.5,3.358-7.5,7.5S155.358,223,159.5,223z"></path> <path d="M175.5,288h-16c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h16c4.142,0,7.5-3.358,7.5-7.5S179.642,288,175.5,288z"></path> <path d="M159.5,183h104c4.142,0,7.5-3.358,7.5-7.5s-3.358-7.5-7.5-7.5h-104c-4.142,0-7.5,3.358-7.5,7.5S155.358,183,159.5,183z"></path> <path d="M159.5,263h32c4.142,0,7.5-3.358,7.5-7.5s-3.358-7.5-7.5-7.5h-32c-4.142,0-7.5,3.358-7.5,7.5S155.358,263,159.5,263z"></path> <path d="M263.5,248h-40c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h40c4.142,0,7.5-3.358,7.5-7.5S267.642,248,263.5,248z"></path> <path d="M127.5,128h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,128,127.5,128z"></path> <path d="M127.5,208h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,208,127.5,208z"></path> <path d="M127.5,288h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,288,127.5,288z"></path> <path d="M127.5,168h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,168,127.5,168z"></path> <path d="M127.5,248h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,248,127.5,248z"></path> <path d="M127.5,328h-8c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h8c4.142,0,7.5-3.358,7.5-7.5S131.642,328,127.5,328z"></path> <path d="M415.5,288H343V63.5c0-17.369-14.131-31.5-31.5-31.5h-41.734c-3.138-9.29-11.93-16-22.266-16h-24.416 C215.674,6.035,203.935,0,191.5,0s-24.174,6.035-31.584,16H135.5c-10.336,0-19.128,6.71-22.266,16H71.5 C54.131,32,40,46.131,40,63.5v336c0,17.369,14.131,31.5,31.5,31.5h108.404c16.061,19.526,40.398,32,67.596,32 c48.248,0,87.5-39.252,87.5-87.5v-25.032l81.903-15.6c3.538-0.674,6.097-3.767,6.097-7.368v-32C423,291.358,419.642,288,415.5,288z M328,63.5V288h-17V71.5c0-4.142-3.358-7.5-7.5-7.5h-32.513c0.004-0.167,0.013-0.332,0.013-0.5V47h40.5 C320.598,47,328,54.402,328,63.5z M174.05,328H159.5c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h6.762 c-4.036,10.053-6.262,21.021-6.262,32.5c0,2.868,0.143,5.702,0.414,8.5H87V79h30.859c4.31,4.899,10.619,8,17.641,8h112 c7.023,0,13.332-3.101,17.641-8H296v209h-48.5C216.751,288,189.659,303.946,174.05,328z M135.5,31h28.438 c2.67,0,5.139-1.419,6.482-3.728C174.893,19.588,182.773,15,191.5,15s16.607,4.588,21.08,12.272 c1.343,2.308,3.812,3.728,6.482,3.728H247.5c4.687,0,8.5,3.813,8.5,8.5v24c0,4.687-3.813,8.5-8.5,8.5h-112 c-4.687,0-8.5-3.813-8.5-8.5v-24C127,34.813,130.813,31,135.5,31z M71.5,416c-9.098,0-16.5-7.402-16.5-16.5v-336 C55,54.402,62.402,47,71.5,47H112v16.5c0,0.168,0.009,0.333,0.013,0.5H79.5c-4.142,0-7.5,3.358-7.5,7.5v320 c0,4.142,3.358,7.5,7.5,7.5h83.709c1.659,5.945,3.934,11.635,6.747,17H71.5z M408,321.294l-81.903,15.6 c-3.538,0.674-6.097,3.767-6.097,7.368V375.5c0,39.977-32.523,72.5-72.5,72.5S175,415.477,175,375.5s32.523-72.5,72.5-72.5H408 V321.294z"></path> <path d="M192,375.5c0,30.603,24.897,55.5,55.5,55.5s55.5-24.897,55.5-55.5c0-6.342-1.063-12.566-3.16-18.499 c-1.38-3.906-5.667-5.955-9.57-4.572c-3.905,1.38-5.953,5.665-4.572,9.57c1.528,4.323,2.302,8.865,2.302,13.5 c0,22.332-18.168,40.5-40.5,40.5S207,397.832,207,375.5s18.168-40.5,40.5-40.5c7.106,0,14.094,1.864,20.207,5.392 c3.586,2.068,8.174,0.84,10.245-2.748c2.07-3.588,0.84-8.174-2.748-10.245C266.814,322.559,257.234,320,247.5,320 C216.897,320,192,344.897,192,375.5z"></path> </g> </g></svg></span><span>Pengeluaran</span>
+                </a>
+
+                <a href="../Views/pemasukan.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'pemasukan.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg fill="#000000" width="25px" height="25px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M277.675 981.521c5.657 0 10.24-4.583 10.24-10.24V499.514c0-5.651-4.588-10.24-10.24-10.24h-81.92c-5.652 0-10.24 4.589-10.24 10.24v471.767c0 5.657 4.583 10.24 10.24 10.24h81.92zm0 40.96h-81.92c-28.278 0-51.2-22.922-51.2-51.2V499.514c0-28.271 22.924-51.2 51.2-51.2h81.92c28.276 0 51.2 22.929 51.2 51.2v471.767c0 28.278-22.922 51.2-51.2 51.2zm275.456-40.96c5.657 0 10.24-4.583 10.24-10.24V408.777c0-5.657-4.583-10.24-10.24-10.24h-81.92a10.238 10.238 0 00-10.24 10.24v562.504c0 5.657 4.583 10.24 10.24 10.24h81.92zm0 40.96h-81.92c-28.278 0-51.2-22.922-51.2-51.2V408.777c0-28.278 22.922-51.2 51.2-51.2h81.92c28.278 0 51.2 22.922 51.2 51.2v562.504c0 28.278-22.922 51.2-51.2 51.2zm275.456-40.016c5.657 0 10.24-4.583 10.24-10.24V318.974c0-5.651-4.588-10.24-10.24-10.24h-81.92c-5.652 0-10.24 4.589-10.24 10.24v653.251c0 5.657 4.583 10.24 10.24 10.24h81.92zm0 40.96h-81.92c-28.278 0-51.2-22.922-51.2-51.2V318.974c0-28.271 22.924-51.2 51.2-51.2h81.92c28.276 0 51.2 22.929 51.2 51.2v653.251c0 28.278-22.922 51.2-51.2 51.2zM696.848 40.96l102.39.154c11.311.017 20.494-9.138 20.511-20.449S810.611.171 799.3.154L696.91 0c-11.311-.017-20.494 9.138-20.511 20.449s9.138 20.494 20.449 20.511z"></path><path d="M778.789 20.571l-.307 101.827c-.034 11.311 9.107 20.508 20.418 20.542s20.508-9.107 20.542-20.418l.307-101.827C819.783 9.384 810.642.187 799.331.153s-20.508 9.107-20.542 20.418z"></path><path d="M163.84 317.682h154.184a51.207 51.207 0 0036.211-14.999L457.208 199.71a10.263 10.263 0 017.237-3.003h159.754a51.235 51.235 0 0036.198-14.976l141.13-141.13c7.998-7.998 7.998-20.965 0-28.963s-20.965-7.998-28.963 0L631.447 152.755a10.265 10.265 0 01-7.248 2.992H464.445a51.226 51.226 0 00-36.201 14.999L325.271 273.719a10.244 10.244 0 01-7.248 3.003H163.839c-11.311 0-20.48 9.169-20.48 20.48s9.169 20.48 20.48 20.48z"></path></g></svg></span><span>Pemasukan</span>
+                </a>
+
+                <a href="../Views/laporan.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'laporan.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>report</title> <path d="M6 11h4v17h-4v-17zM22 16v12h4v-12h-4zM14 28h4v-24h-4v24z"></path> </g></svg></span><span>Laporan</span>
+                </a>
+
+                <?php if (isset($_SESSION['id_user']) && $_SESSION['role'] === 'owner') { ?>
+                <a href="../Views/kelola_user.php"
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-indigo-200
+                <?php echo ($current == 'kelola_user.php') ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:text-indigo-600'; ?>">
+                    <span><svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" fill="#000000"></path> <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" fill="#000000"></path> </g></svg></span><span>Kelola User</span>
+                </a>
+                <?php } ?>
+
+            </nav>
         </div>
-
-        <nav class="space-y-1.5 text-md font-semibold leading-7">
-          <a href="../Views/dashboard.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>🏠</span><span>Dashboard</span>
-          </a>
-          <a href="../Views/transaksi.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>👥</span><span>Transaksi</span>
-          </a>
-          <a href="../Views/hutang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>👥</span><span>Hutang</span>
-          </a>
-          <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) {?>
-          <a href="../Views/barang.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>📁</span><span>Barang</span>
-          </a>
-          <?php } ?>
-          <?php if (isset($_SESSION['id_user']) && ($_SESSION['role'] === 'owner' || $_SESSION['role'] === 'operator')) {?>
-          <a href="../Views/kategori.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>📁</span><span>Kategori</span>
-          </a>
-          <?php } ?>
-          <a href="../Views/pengeluaran.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>📄</span><span>Pengeluaran</span>
-          </a>
-          <a href="../Views/pemasukan.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>📊</span><span>Pemasukan</span>
-          </a>
-          <a href="../Views/laporan.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
-            <span>📊</span><span>Laporan</span>
-          </a>
-          <?php if (isset($_SESSION['id_user']) && $_SESSION['role'] === 'owner') {?>
-          <a href="../Views/kelola_user.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span>🗓️</span><span>Kelola User</span>
-          </a>
-          <?php } ?>
-          <a href="../Config/logout.php" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600 ">
-            <span></span><span>Logout</span>
-          </a>
-        </nav>
-      </div>
     </aside>
 
-    
-  </div>
+</div>

@@ -106,7 +106,7 @@ include '../Layout/footer.php';
 
     <section class="flex-1 flex flex-col">
         <?php include '../Layout/header.php'; ?>
-        <div class="flex p-6 pt-17">
+        <div class="flex p-6 pt-16 pl-20 flex-1">
             <div class="w-1/3 p-4 bg-white border border-gray-300 rounded shadow h-screen flex flex-col">
                 <h2 class="text-xl font-bold mb-4">Konfirmasi Transaksi</h2>
                 <form method="POST" class="flex flex-col flex-1">

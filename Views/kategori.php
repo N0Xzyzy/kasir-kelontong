@@ -31,7 +31,7 @@ include '../Layout/footer.php';
             unset($_SESSION['msg']);
         }
         ?>
-        <main class="p-6 pt-17 flex-1">
+        <main class="p-6 pt-24 pl-32 flex-1">
             <div class="bg-white rounded-lg shadow p-6">
                 <h1 class="font-bold text-xl">Data Kategori</h1>
                 <button onclick="tambahKategori.php" type="button" class="font-semibold text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

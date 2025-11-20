@@ -68,7 +68,7 @@ include '../Layout/footer.php';
     <div class="flex flex-col flex-1">
         <?php include '../Layout/header.php'; ?>
 
-        <main class="p-6 pt-17 flex-1">
+        <main class="p-6 pt-24 pl-32 flex-1">
 
             <!-- CARD TEMPLATE -->
             <div class="bg-white border border-1 rounded-lg shadow relative m-10">
