@@ -6,114 +6,131 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] != 'owner') {
     die("Akses ditolak. Anda bukan owner.");
 }
 
+// Ambil kata kunci pencarian
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT * FROM users";
+// Query aman menggunakan prepared statement
 if (!empty($search)) {
-    $query .= " WHERE username LIKE '%$search%' OR username LIKE '%$search%'";
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username LIKE ? ORDER BY username ASC");
+    $like = "%$search%";
+    $stmt->bind_param("s", $like);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $query = "SELECT * FROM users ORDER BY username ASC";
+    $result = $conn->query($query);
 }
-$query .= " ORDER BY username ASC";
-
-$result = $conn->query($query);
 
 include '../Layout/sidebar.php';
-include '../Layout/footer.php';
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="id">
 <head>
-    <link rel="stylesheet" href="pagewTable.css">
+    <meta charset="UTF-8">
     <title>Data User</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+        body { font-family: 'Montserrat', sans-serif; }
     </style>
 </head>
 
 <body class="bg-gray-100 h-screen flex">
-    <div class="flex-1 flex flex-col">
-        <?php
-        include '../Layout/header.php';
-        if (isset($_SESSION['msg'])) {
-            echo "<p style='color: green;'>" . $_SESSION['msg'] . "</p>";
-            unset($_SESSION['msg']);
-        }
-        ?>
-        <main class="p-6 pt-24 pl-32 flex-1">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h1 class="text-2xl font-bold">Data User</h2>
+<div class="flex-1 flex flex-col">
+    <?php include '../Layout/header.php'; ?>
 
-                    <?php if (isset($_GET['msg'])): ?>
-                        <div class="notif-sukses" id="notif">
-                            <?= htmlspecialchars($_GET['msg']) ?>
-                        </div>
-                    <?php endif; ?>
+    <main class="p-6 pt-24 pl-32 flex-1">
+        <div class="bg-white rounded-xl shadow p-6">
+            <h1 class="text-2xl font-bold mb-4">Data User</h1>
 
-                    <script>
-                        setTimeout(function() {
-                            const notif = document.getElementById('notif');
-                            if (notif) {
-                                notif.classList.add('hide');
-                                setTimeout(() => notif.remove(), 500);
-                            }
-                        }, 3000);
-                    </script>
+            <!-- Notifikasi -->
+            <?php if (isset($_GET['msg'])): ?>
+                <div id="notif" class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+                    <?= htmlspecialchars($_GET['msg']) ?>
+                </div>
+            <?php endif; ?>
 
-                    <form method="GET">
-                        <div class="flex item-center mb-4 mt-4">
-                            <input class="px-3 py-2 font-semibold placeholder-gray-500 text-black bg-white ring-2 ring-gray-300 focus:ring-gray-500 focus:ring2" type="text" name="search" placeholder="Cari username"
-                                value="<?php echo htmlspecialchars($search); ?>">
-                            <button class="cursor-pointer p-1.5 bg-blue-400 border-blue-400" type="submit">
-                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            </button>
-                        </div>
-                    </form>
+            <script>
+                setTimeout(() => {
+                    const notif = document.getElementById('notif');
+                    if (notif) notif.remove();
+                }, 3000);
+            </script>
 
-                    <div>
-                        <table class="w-full">
-                            <thead class="border-b border-gray-200 bg-gray-50">
-                                <tr>
-                                    <th class="p-3 text-sm text-gray-700 text-left font-semibold">ID</th>
-                                    <th class="p-3 text-sm text-gray-700 text-left font-semibold">Username</th>
-                                    <th class="p-3 text-sm text-gray-700 text-left font-semibold">Role</th>
-                                    <th class="p-3 text-sm text-gray-700 text-left font-semibold">Aksi</th>
+            <!-- Form Search -->
+            <form method="GET" class="mb-4">
+                <div class="flex gap-2">
+                    <input
+                        class="w-64 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                        type="text"
+                        name="search"
+                        placeholder="Cari username..."
+                        value="<?= htmlspecialchars($search) ?>"
+                    >
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                        Cari
+                    </button>
+                </div>
+            </form>
+
+            <!-- Tabel -->
+            <div class="overflow-x-auto">
+                <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-700">ID</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-700">Username</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-700">Role</th>
+                            <th class="p-3 text-left text-sm font-semibold text-gray-700">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="p-3 text-sm"><?= $row['id_user'] ?></td>
+                                    <td class="p-3 text-sm"><?= $row['username'] ?></td>
+                                    <td class="p-3 text-sm"><?= $row['role'] ?></td>
+                                    <td class="p-3 text-sm space-x-1">
+                                        <?php if ($row['username'] != $_SESSION['username']): ?>
+                                            <a href="editUser.php?id_user=<?= $row['id_user'] ?>"
+                                               class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded">
+                                                Edit
+                                            </a>
+                                            <a href="hapusUser.php?id_user=<?= $row['id_user'] ?>"
+                                               onclick="return confirm('Yakin ingin menghapus user ini?')"
+                                               class="px-2 py-1 text-xs bg-red-100 text-red-700 rounded">
+                                                Hapus
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-gray-400 text-xs italic">Akun sendiri</span>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php while ($row = $result->fetch_assoc()) { ?>
-                                    <tr class="odd:bg-white even:bg-gray-50">
-                                        <td class="p-3 text-sm text-gray-700"><?php echo $row['id_user']; ?></td>
-                                        <td class="p-3 text-sm text-gray-700"><?php echo $row['username']; ?></td>
-                                        <td class="p-3 text-sm text-gray-700"><?php echo $row['role']; ?></td>
-                                        <td class="p-3 text-sm text-gray-700">
-                                            <?php if ($row['username'] != $_SESSION['username']) { ?>
-                                                <a class="p-1.5 tracking-wider bg-green-300 text-green-800 rounded-sm bg-opacity-30 cursor-pointer font-semibold" href="editUser.php?id_user=<?php echo $row['id_user']; ?>">Edit</a>
-                                                    |
-                                                <a class="p-1.5 tracking-wider bg-red-300 text-red-800 rounded-sm bg-opacity-30 cursor-pointer font-semibold" href="hapusUser.php?id_user=<?php echo $row['id_user']; ?>"
-                                                onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
-                                            <?php } else { ?>
-                                                <span style="color:gray;">Tidak bisa dihapus</span>
-                                            <?php } ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                        <a class="font-semibold text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" href="tambahUser.php">Tambah User</a>
-                    </div>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="p-4 text-center text-gray-500">
+                                    Data tidak ditemukan
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
-        </main>
-    </div>
-</body>
 
+            <!-- Tombol Tambah -->
+            <div class="mt-4">
+                <a href="tambahUser.php"
+                   class="inline-block px-5 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700">
+                    + Tambah User
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
 </html>
+
+<?php include '../Layout/footer.php'; ?>
